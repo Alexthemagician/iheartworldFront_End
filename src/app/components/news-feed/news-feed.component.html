@@ -1,0 +1,29 @@
+<h1 class="mt-3 mb-3" id="bootstrap_override2"style="text-align: center; ">News Feed</h1>
+<table class="table table-borderless" *ngFor="let tempNewsFeed of newsFeeds" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+    <thead>
+        <tr>
+            <th>{{ tempNewsFeed.userId }}</th>
+        </tr>
+    </thead>
+    <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+        <tr>
+            <td>{{ tempNewsFeed.postText }}</td>            
+        </tr>
+        <tr>
+            <td>@if (tempNewsFeed.postImgUrl !== null){<img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:20em;">}</td>
+        </tr>
+        <tr>
+            <td>@if (tempNewsFeed.postVideoUrl !== null){<video src="{{ tempNewsFeed.postVideoUrl }}"></video>}</td>
+        </tr>
+        <tr>
+            <td>{{ tempNewsFeed.dateCreated }}</td>
+        </tr>
+        <tr style="height: 5em">
+            <td><br></td>
+        </tr>        
+    </tbody>
+</table>
+
+
+
+

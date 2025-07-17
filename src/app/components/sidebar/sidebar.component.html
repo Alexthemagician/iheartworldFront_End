@@ -1,0 +1,10 @@
+<div class="sidebar" style="max-width: 20%; display: flex; justify-content: flex-start; flex-direction: column;">
+    <input type="text" placeholder="Search..">
+    <a>Categories</a>
+    <a>Groups</a>
+    <a>Saved Items</a>
+    <a>Favorites</a>
+    <button (click)="showModal()">Create Post</button>
+    <app-newpost *ngIf="isModalVisible" (close)="hideModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-newpost>
+
+</div>

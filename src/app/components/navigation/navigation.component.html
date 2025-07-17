@@ -1,0 +1,15 @@
+<div class="navbar" style="display: flex; justify-content: flex-end; border-bottom: solid 2px lightgray">
+    <a style="padding-right:2em">Home</a>
+    <a style="padding-right:2em">Notifications</a>
+    <a style="padding-right:2em">Messages</a>   
+    <button (click)="Login()">Login</button>
+    <button matButton [matMenuTriggerFor]="menu">Profile</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item><a>My Profile</a></button>
+        <button mat-menu-item><a>Account</a></button>
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item (click)="Logout()">Logout</button>
+    </mat-menu>
+</div>
+
+
