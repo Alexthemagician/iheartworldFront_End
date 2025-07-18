@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Newsfeed } from '../common/newsfeed';
 import { map, Observable } from 'rxjs';
+import { provideHttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
