@@ -1,9 +1,3 @@
-<div>
-  <app-user-profile></app-user-profile>
-</div>
-<div>
-  <app-sidebar></app-sidebar>
-</div>
-<div class="container">  
-  <app-news-feed style="position: absolute; top: 3em; left: 20%; border-left: solid 2px lightgray; padding-left: 4em"></app-news-feed>
-</div>
+<app-user-profile *ngIf="isLoggedIn"></app-user-profile>
+<app-navigation *ngIf="!isLoggedIn"></app-navigation>
+  

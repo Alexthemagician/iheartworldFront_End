@@ -16,10 +16,13 @@ export class NavigationComponent {
 
   constructor(@Inject(DOCUMENT) public document: Document, private auth: AuthService) {}
 
+  isLoggedIn: boolean | undefined;
+  isLoggedOut: boolean | undefined;
   
 
   Login() {
     this.auth.loginWithRedirect();
+    this.isLoggedIn = true;
   }
 
   Logout() {
@@ -28,5 +31,6 @@ export class NavigationComponent {
         returnTo: this.document.location.origin 
       }
     });
+    this.isLoggedOut = true;
   }
 }

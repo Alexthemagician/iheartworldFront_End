@@ -5,6 +5,7 @@ import { AuthService } from '@auth0/auth0-angular';
 @Component({
   selector: 'app-login-status',
   templateUrl: './login-status.component.html',
+  standalone: true,
   styleUrl: './login-status.component.css'
 })
 export class LoginStatusComponent {
@@ -12,6 +13,8 @@ export class LoginStatusComponent {
   profileJson: string | undefined;
   userEmail: string | undefined;
   storage: Storage = sessionStorage;
+  isLoggedIn: boolean = false;
+  isLoggedOut: boolean = true
 
   constructor(private auth: AuthService, @Inject(DOCUMENT) private doc: Document) {}
 
@@ -30,9 +33,11 @@ export class LoginStatusComponent {
 
   login() {
     this.auth.loginWithRedirect();
+    this.isLoggedIn = true;
   }
 
   logout(): void {
     this.auth.logout({ logoutParams: { returnTo: this.doc.location.origin } });
+    this.isLoggedOut = true;
   }
 }
