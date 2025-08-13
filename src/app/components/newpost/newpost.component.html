@@ -1,13 +1,16 @@
-<div #newPostComponent class="modal-overlay" (click)="$event.stopPropagation()"></div>
-<div class="modal-content">  
+<div #newPostComponent class="modal-overlay"></div>
+<div class="modal-content" (click)="$event.stopPropagation()">  
 <h1>New Post</h1>  
-<input type="textarea" id="post" placeholder="Tell us your thoughts..." name="usertext" class="textarea">
+<textarea id="post" placeholder="Tell us your thoughts..." name="usertext" class="textarea" [(ngModel)]="postText"></textarea>
 <div class="content" style="position: relative">
 <input type="file" id="photo" accept="image/*" name="file" style="z-index: 2; position: absolute; top: 3em; left: 1.5em; opacity: 0">
-<input placeholder="Upload Photo/Video" style="border: none; position: absolute; top: 3em; left: 5em">
-<img src="https://lh3.googleusercontent.com/pw/AP1GczNnLpulSX057LEWSK5gHeA1yn-GMFWOrbUUqxWR50E67HsU5vgs4xh2MS5xroLy3pY4ml1W3JWIwMepRQ5HIowWfKze0wrqHlK1yLwtu4H9q5vbJr9LbwkmcLHfwIRJY8-jQLIXO2nEyyOZnWC1kTI4Tw=w512-h512-s-no-gm?authuser=1" alt="Image of photo" style="width: 15%; position: absolute; top: 1.5em; left: 1.5em">
-<button class="submit-button" style="position: absolute; top: 6em; left: 4.5em">Submit</button>
+<input id="uploads" placeholder="Upload Photo/Video" (click)="openWidget()" style="border: none; position: absolute; top: 3em; left: 5em">
+<img src="assets/image_icon.png" alt="Image of photo" style="width: 15%; position: absolute; top: 1.5em; left: 1.5em">
+<button class="submit-button" style="position: absolute; top: 6em; left: 0em" (click)="openWidget()">Upload</button>
+<div class="thumbnails"></div>
+<button class="submit-button" (click)="postNewPost()" style="position: absolute; top: 6em; left: 4.5em">Submit</button>
 <button class="submit-button" (click)="closeModal()" style="position: absolute; top: 6em; left: 12.5em">Close</button>
+
 </div>
 </div>
 

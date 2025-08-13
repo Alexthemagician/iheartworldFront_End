@@ -1,9 +1,11 @@
 <div class="navbar" style="display: flex; justify-content: flex-end; border-bottom: solid 2px lightgray">
-    <a style="padding-right:2em">Home</a>
-    <a style="padding-right:2em">Notifications</a>
-    <a style="padding-right:2em">Messages</a>   
-    <button (click)="Login()">Login</button>
-    <button matButton [matMenuTriggerFor]="menu">Profile</button>
+    <a id="logo"><img src="assets/IHeartWorld_Logo.png" alt="logo" id="logo-img"></a>
+    <a class="nav-items" style="padding-right:2em"><img id= "home-icon" src="assets/home.svg" alt="Home Icon">Home</a>
+    <a class="nav-items" style="padding-right:2em"><img id="notifications-icon" src="assets/notifications.svg" alt="Notifications Icon">Notifications</a>
+    <a class="nav-items" style="padding-right:2em"><img id="messages-icon" src="assets/messages.svg" alt="Messages Icon">Messages</a>   
+    <button (click)="Login()" id="login-button" *ngIf="!isLoggedIn">Login</button>
+    <img id="profile-icon" src="assets/profile.svg" alt="Profile Icon">
+    <button matButton [matMenuTriggerFor]="menu" id="profile-button">Profile</button>
     <mat-menu #menu="matMenu">
         <button mat-menu-item><a>My Profile</a></button>
         <button mat-menu-item><a>Account</a></button>

@@ -6,6 +6,8 @@ import { AuthService, AuthModule, AuthGuard, AuthHttpInterceptor } from '@auth0/
 import { AuthInterceptorService } from './app/services/auth-interceptor.service';
 
 
+
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideAuth0({
@@ -21,3 +23,7 @@ bootstrapApplication(AppComponent, {
 }).catch((err) => console.error(err));
   
 
+
+
+
+    

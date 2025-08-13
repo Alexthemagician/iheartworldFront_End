@@ -1,11 +1,20 @@
 <h1 class="mt-3 mb-3" id="bootstrap_override2"style="text-align: center; ">News Feed</h1>
-<table class="table table-borderless" *ngFor="let tempNewsFeed of newsFeeds" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+
+<table class="table table-borderless" *ngFor="let tempNewsFeed of newsFeeds" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 10em ">
     <thead>
         <tr>
-            <th>{{ tempNewsFeed.userId }}</th>
+            <th id="user_name">&#64;{{ tempNewsFeed.userId }}</th>
+            <button matButton [matMenuTriggerFor]="menu" id="postMenu"><img src="assets/menu.svg" alt="Menu"></button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Follow User</button>
+                <button mat-menu-item>Unfollow User</button>                
+                <button mat-menu-item>Share Post</button>         
+                <button mat-menu-item *ngIf="userIdMatch" (click)="editPost()">Edit</button>
+                <button mat-menu-item *ngIf="userIdMatch" (click)="deletePost()">Delete</button>
+            </mat-menu>
         </tr>
     </thead>
-    <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+    <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
         <tr>
             <td>{{ tempNewsFeed.postText }}</td>            
         </tr>
@@ -17,10 +26,14 @@
         </tr>
         <tr>
             <td>{{ tempNewsFeed.dateCreated }}</td>
-        </tr>
-        <tr style="height: 5em">
-            <td><br></td>
         </tr>        
+        <tr>
+            <td style="position: relative; left: 25em; bottom: 1em"><input type="image" src="assets/heart_icon_black.svg" style="width: 5em; height: 5em;">Like</td>
+            
+        </tr> 
+        <tr>
+            <td id="bottom"><br></td>
+        </tr>      
     </tbody>
 </table>
 

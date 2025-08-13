@@ -12,6 +12,10 @@ import { CommonModule } from '@angular/common';
 
 
 
+
+// Make sure to install @types/cloudinary if available for better type support
+declare const cloudinary: any;
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -19,16 +23,22 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
+
 export class AppComponent {
 [x: string]: any;
 
 
   title = 'iheartworld';  
   isLoggedIn = false;
+  
+  
 
   constructor(private auth: AuthService) {
     this.auth.isAuthenticated$.subscribe((authenticated) => {
       this.isLoggedIn = authenticated;
     });  
   }
+
+  
 }

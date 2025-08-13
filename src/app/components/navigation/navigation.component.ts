@@ -14,15 +14,19 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 })
 export class NavigationComponent {
 
-  constructor(@Inject(DOCUMENT) public document: Document, private auth: AuthService) {}
+  constructor(@Inject(DOCUMENT) public document: Document, private auth: AuthService) {
+    this.auth.isAuthenticated$.subscribe(
+      (loggedIn) => this.isLoggedIn = loggedIn
+    );
+  }
 
-  isLoggedIn: boolean | undefined;
-  isLoggedOut: boolean | undefined;
+  isLoggedIn: boolean = false;
+  isLoggedOut: boolean = true;
   
 
   Login() {
     this.auth.loginWithRedirect();
-    this.isLoggedIn = true;
+    
   }
 
   Logout() {
@@ -31,6 +35,6 @@ export class NavigationComponent {
         returnTo: this.document.location.origin 
       }
     });
-    this.isLoggedOut = true;
+    
   }
 }
