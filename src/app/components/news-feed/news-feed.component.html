@@ -1,5 +1,6 @@
 <h1 class="mt-3 mb-3" id="bootstrap_override2"style="text-align: center; ">News Feed</h1>
-<app-newpost *ngIf="isModalVisible" (close)="hideModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-newpost>
+<app-newpost *ngIf="isModalVisible" (close)="hideModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%">   
+</app-newpost>
 <table class="table table-borderless" *ngFor="let tempNewsFeed of newsFeeds" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 10em ">
     <thead>
         <tr>
@@ -8,13 +9,12 @@
             <mat-menu #menu="matMenu">                        
                 <button mat-menu-item *ngIf="userIdMatch" (click)="showModal()" (click)="editPost(tempNewsFeed)">Edit</button>
                 
-                <button mat-menu-item *ngIf="userIdMatch" (click)="deletePost()">Delete</button>
+                <button mat-menu-item *ngIf="userIdMatch" (click)="deletePost(tempNewsFeed)">Delete</button>
             </mat-menu>
         </tr>
     </thead>
     <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <tr>
-            <td id="findPostId">{{ tempNewsFeed.postId }}</td>
+        <tr>            
             <td>{{ tempNewsFeed.postText }}</td>            
         </tr>
         <tr>

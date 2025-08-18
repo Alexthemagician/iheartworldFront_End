@@ -25,8 +25,16 @@ export class NewsFeedComponent {
   userId: string = '';  
   postText: string = '';
   postVideoUrl: string = '';
-  postId: number = 0;  
+  postId: number = 0;
+  
+  editedText: string = '';
   private baseUrl = new URL('http://localhost:8080/api/userPosts');
+  static isEditMode: boolean;
+  static editedText: string = '';
+  static editedPostId: number = 0;
+  static editedImgUrl: string = '';
+  static editedVideoUrl: string = '';
+  static editedDateCreated: Date = new Date();
   constructor(private newsFeedService: NewsfeedService, private auth: AuthService) {}
 
   ngOnInit(): void {
@@ -64,13 +72,39 @@ export class NewsFeedComponent {
     }
   }
 
-  editPost(tempNewsfeed: any) {
+  editPost(tempNewsfeed: any) {    
     
     this.isModalVisible = true;
+    NewsFeedComponent.isEditMode = true;
     const match = tempNewsfeed._links?.self?.href.match(/\/(\d+)$/);
     const postId = match ? parseInt(match[1], 10) : null;
-    
+    this.postText = tempNewsfeed.postText;
+    const editedText = this.postText;
+    NewsFeedComponent.editedText = editedText;
+    const editedImgUrl = tempNewsfeed.postImgUrl;
+    NewsFeedComponent.editedImgUrl = editedImgUrl;
+    const editedVideoUrl = tempNewsfeed.postVideoUrl;
+    NewsFeedComponent.editedVideoUrl = editedVideoUrl;
+    const editedDateCreated = tempNewsfeed.dateCreated;
+    NewsFeedComponent.editedDateCreated = editedDateCreated;
+    if (postId!== null) {
+    NewsFeedComponent.editedPostId = postId;
+    }
     console.log(postId);
+    console.log(editedText);
+    return {
+      editedText: NewsFeedComponent.editedText,
+      isEditMode: NewsFeedComponent.isEditMode,
+      editedPostId: NewsFeedComponent.editedPostId,
+      editedImgUrl: NewsFeedComponent.editedImgUrl,
+      editedVideoUrl: NewsFeedComponent.editedVideoUrl,
+      editedDateCreated: NewsFeedComponent.editedDateCreated,
+    }
+    
+    
+    
+    
+    
     
   }
 
@@ -83,8 +117,18 @@ export class NewsFeedComponent {
   }
   
 
-  deletePost() {
+  deletePost(tempNewsfeed: any) {
+    NewsFeedComponent.isEditMode = true;
+    const match = tempNewsfeed._links?.self?.href.match(/\/(\d+)$/);
+    const postId = match ? parseInt(match[1], 10) : null;
+    if (postId === match && postId!== null) {      
+          this.newsFeedService.deleteUserPost(postId).subscribe;         
+                         
+        }
+      
 
   }
   
+
 }
+

@@ -17,6 +17,10 @@ export class NewpostService {
   return this.httpClient.post<any>(this.baseUrl, postData);
 }
 
+updateUserPost(editedPostData: any): Observable<any> {
+  return this.httpClient.put(this.baseUrl + '/' + editedPostData.postId, editedPostData);
+}
+
 getUserByEmail(email: string): Observable<any> {
   return this.httpClient.get<any>(`http://localhost:8080/api/user/by-email?email=${encodeURIComponent(email)}`);
 }

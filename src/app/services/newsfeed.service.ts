@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { Newsfeed } from '../common/newsfeed';
 import { map, Observable } from 'rxjs';
 import { provideHttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NewsfeedService {
+export class NewsfeedService {  
 
   private baseUrl = 'http://localhost:8080/api/userPosts';
 
@@ -26,6 +27,13 @@ export class NewsfeedService {
 getUserPostById(postId: number): Observable<any> {
   return this.httpClient.get(this.baseUrl + '/' + postId);
 }
+
+updateUserPost(post: Newsfeed): Observable<any> {
+  return this.httpClient.put(this.baseUrl + '/' + post.postId, post);
+}
+  deleteUserPost(postId: number): Observable<any> {
+    return this.httpClient.delete(this.baseUrl + '/' + postId);
+  }
 }
 
 interface GetResponse {

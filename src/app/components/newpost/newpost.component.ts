@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output, Input } from '@angular/core';
 import { Image } from '../../common/image';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NewpostService } from '../../services/newpost.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { CommonModule } from '@angular/common';
+import { NewsFeedComponent } from '../news-feed/news-feed.component';
+import { NewsfeedService } from '../../services/newsfeed.service';
 
 
 declare const cloudinary: any;
@@ -12,11 +14,14 @@ declare const cloudinary: any;
 @Component({
   selector: 'app-newpost',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NewsFeedComponent],  
   templateUrl: './newpost.component.html',
   styleUrl: './newpost.component.css'
 })
 export class NewpostComponent {
+
+
+
 [x: string]: any;
 cloudname = "dpevuiym0";
   uploadPreset = "ml_default";
@@ -27,13 +32,18 @@ cloudname = "dpevuiym0";
   userId: string = '';  
   postText: string = '';
   postVideoUrl: string = '';
+  isEditMode: boolean = NewsFeedComponent.isEditMode;
+  editedText: string = NewsFeedComponent.editedText;
+  editedPostId: number = NewsFeedComponent.editedPostId;
+  editedImgUrl: string = NewsFeedComponent.editedImgUrl;
+  editedVideoUrl: string = NewsFeedComponent.editedVideoUrl;
+  editedDateCreated: Date = NewsFeedComponent.editedDateCreated;
   
   
   
   constructor(private newpostService: NewpostService,
     private auth: AuthService,
-  ) {
-  }
+    private newsFeedService: NewsfeedService) { }
 
   @Output() close = new EventEmitter<void>();
 
@@ -45,6 +55,10 @@ cloudname = "dpevuiym0";
   
 
   ngOnInit() {
+    if (NewsFeedComponent.isEditMode) {
+      this.postText = NewsFeedComponent.editedText;      
+    }
+
     this.auth.user$.subscribe(user => {
       if (user && user.email) {
         this.newpostService.getUserByEmail(user.email).subscribe(
@@ -97,7 +111,32 @@ cloudname = "dpevuiym0";
   }
 
   postNewPost() {
-    const postData = {
+    if (NewsFeedComponent.isEditMode) {
+      const editedPostData = {
+        postText: this.postText,
+        postImgUrl: this.editedImgUrl,
+        postVideoUrl: this.editedVideoUrl,
+        dateCreated: this.editedDateCreated,
+        userId: this.userId,
+        postId: this.editedPostId,        
+      }
+      this.newpostService.updateUserPost(editedPostData).subscribe(
+        response => {
+          console.log('Post updated successfully:', response);
+          // Optionally reset form fields here
+          this.postText = '';
+          this.postImgUrl = '';
+          this.postVideoUrl = '';
+          NewsFeedComponent.isEditMode = false;
+          NewsFeedComponent.editedText = '';          
+          this.close.emit();
+        }
+        ,
+        error => {
+          console.error('Error updating post:', error);
+        }
+    );
+  } else {const postData = {
       postText: this.postText,
       postImgUrl: this.postImgUrl,
       postVideoUrl: this.postVideoUrl,
@@ -117,8 +156,10 @@ cloudname = "dpevuiym0";
       console.error('Error posting:', error);
     }
   );
-  }
+}
+  
 
   
   
+}
 }
