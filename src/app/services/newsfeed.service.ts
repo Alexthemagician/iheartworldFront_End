@@ -18,6 +18,14 @@ export class NewsfeedService {
       map(response => response._embedded.userPosts)
     );
   }
+
+  getUserByEmail(email: string): Observable<any> {
+  return this.httpClient.get<any>(`http://localhost:8080/api/user/by-email?email=${encodeURIComponent(email)}`);
+}
+
+getUserPostById(postId: number): Observable<any> {
+  return this.httpClient.get(this.baseUrl + '/' + postId);
+}
 }
 
 interface GetResponse {
@@ -25,3 +33,5 @@ interface GetResponse {
     userPosts: Newsfeed[];
   };
 }
+
+
