@@ -9,6 +9,8 @@ import { NewpostComponent } from '../newpost/newpost.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { AuthService } from '@auth0/auth0-angular';
 
+
+
 @Component({
   selector: 'app-news-feed',
   standalone: true,
@@ -20,6 +22,8 @@ export class NewsFeedComponent {
 
   newsFeeds: Newsfeed[] = [];  
   isModalVisible = false;
+  cloudname = "dpevuiym0";
+  uploadPreset = "ml_default";
 
   postImgUrl: string = '';
   userId: string = '';  
@@ -50,8 +54,7 @@ export class NewsFeedComponent {
           }
         );
       }
-    });
-
+    });    
     
   }
   listNewsFeeds() {

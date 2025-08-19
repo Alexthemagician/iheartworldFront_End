@@ -18,10 +18,10 @@
             <td>{{ tempNewsFeed.postText }}</td>            
         </tr>
         <tr>
-            <td>@if (tempNewsFeed.postImgUrl !== null){<img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:20em;">}</td>
+            <td>@if (tempNewsFeed.postImgUrl !== null && tempNewsFeed.postImgUrl !== ''){<img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:25em; width: 50em; object-fit: cover;">}</td>
         </tr>
         <tr>
-            <td>@if (tempNewsFeed.postVideoUrl !== null){<video src="{{ tempNewsFeed.postVideoUrl }}"></video>}</td>
+            <td>@if (tempNewsFeed.postVideoUrl !== null && tempNewsFeed.postVideoUrl !== ''){<video style="max-width: 50em;" src="{{ tempNewsFeed.postVideoUrl }}" controls></video>}</td>
         </tr>
         <tr>
             <td>{{ tempNewsFeed.dateCreated }}</td>

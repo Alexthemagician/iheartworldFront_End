@@ -23,6 +23,7 @@
     "@angular/router": "^17.2.0",
     "@auth0/auth0-angular": "^2.2.3",
     "cloudinary": "^2.7.0",
+    "cloudinary-video-player": "^3.2.1",
     "dotenv": "^17.2.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

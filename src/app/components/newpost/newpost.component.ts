@@ -87,7 +87,8 @@ cloudname = "dpevuiym0";
       maxImageFileSize: 2000000,
       maxImageWidth: 2000,
       maxVideoFileSize: 100000000,
-      thumbnails: '.thumbnails'
+      thumbnails: '.thumbnails',
+      resource_type: 'auto'
 },
     (error: any, result: any) => {
       if (!error && result && result.event === "success") {
@@ -115,9 +116,14 @@ cloudname = "dpevuiym0";
     }
   }
 
-  postNewPost() {
+  postNewPost() {    
+
     if (NewsFeedComponent.isEditMode) {
       if (this.chooseNewImage) {
+        if (this.postImgUrl.split('.').pop() === 'mp4') {
+          this.postVideoUrl = this.postImgUrl;
+          this.postImgUrl = '';          
+        }
         const fullyEditedPostData = {
           postText: this.postText,
           postImgUrl: this.postImgUrl,
@@ -168,7 +174,12 @@ cloudname = "dpevuiym0";
         }
     );
       }
-  } else {const postData = {
+  } else {
+    if (this.postImgUrl.split('.').pop() === 'mp4') {
+          this.postVideoUrl = this.postImgUrl;
+          this.postImgUrl = '';          
+        }
+    const postData = {
       postText: this.postText,
       postImgUrl: this.postImgUrl,
       postVideoUrl: this.postVideoUrl,
