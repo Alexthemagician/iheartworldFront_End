@@ -92,6 +92,7 @@ export class NewsFeedComponent {
     }
     console.log(postId);
     console.log(editedText);
+    this.listNewsFeeds();
     return {
       editedText: NewsFeedComponent.editedText,
       isEditMode: NewsFeedComponent.isEditMode,
@@ -106,6 +107,7 @@ export class NewsFeedComponent {
     
     
     
+    
   }
 
   showModal() {
@@ -113,16 +115,27 @@ export class NewsFeedComponent {
   }
 
   hideModal() {
+    NewsFeedComponent.isEditMode = false;
     this.isModalVisible = false;
   }
   
 
   deletePost(tempNewsfeed: any) {
-    NewsFeedComponent.isEditMode = true;
+    //NewsFeedComponent.isEditMode = true;
     const match = tempNewsfeed._links?.self?.href.match(/\/(\d+)$/);
     const postId = match ? parseInt(match[1], 10) : null;
-    if (postId === match && postId!== null) {      
-          this.newsFeedService.deleteUserPost(postId).subscribe;         
+    console.log(postId);
+    console.log(match);
+    if (postId === parseInt(match[1], 10) && postId!== null) {      
+          this.newsFeedService.deleteUserPost(postId).subscribe(
+            response => {
+              console.log('Post deleted successfully:', response);
+              this.listNewsFeeds(); // Refresh the news feed after deletion
+            },
+            error => {
+              console.error('Error deleting post:', error);
+            }
+          );         
                          
         }
       

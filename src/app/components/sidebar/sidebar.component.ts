@@ -18,8 +18,7 @@ export class SidebarComponent {
   isEditMode: boolean = NewsFeedComponent.isEditMode;
 
   showModal() {
-    this.isModalVisible = true;
-    this.isEditMode = false;
+    this.isModalVisible = true;    
   }
 
   hideModal() {

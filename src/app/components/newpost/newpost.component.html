@@ -1,7 +1,7 @@
 <div #newPostComponent class="modal-overlay"></div>
 <div class="modal-content" (click)="$event.stopPropagation()">  
 <h1>New Post</h1>  
-<textarea id="post" placeholder="Tell us your thoughts..." name="usertext" class="textarea" [(ngModel)]="postText" *ngIf="isEditMode">{{editedText}}</textarea>
+<textarea id="post" placeholder="Tell us your thoughts..." name="usertext" class="textarea" [(ngModel)]="postText">{{editedText}}</textarea>
 <div class="content" style="position: relative">
 <input type="file" id="photo" accept="image/*" name="file" style="z-index: 2; position: absolute; top: 3em; left: 1.5em; opacity: 0">
 <input id="uploads" placeholder="Upload Photo/Video" (click)="openWidget()" style="border: none; position: absolute; top: 3em; left: 5em">

@@ -38,6 +38,7 @@ cloudname = "dpevuiym0";
   editedImgUrl: string = NewsFeedComponent.editedImgUrl;
   editedVideoUrl: string = NewsFeedComponent.editedVideoUrl;
   editedDateCreated: Date = NewsFeedComponent.editedDateCreated;
+  chooseNewImage: boolean = false;
   
   
   
@@ -47,7 +48,8 @@ cloudname = "dpevuiym0";
 
   @Output() close = new EventEmitter<void>();
 
-  closeModal(): void {
+  closeModal(): void {   
+    this.isEditMode = false; 
     this.postText = '';    
     this.close.emit();
     
@@ -55,8 +57,8 @@ cloudname = "dpevuiym0";
   
 
   ngOnInit() {
-    if (NewsFeedComponent.isEditMode) {
-      this.postText = NewsFeedComponent.editedText;      
+    if (this.isEditMode) {
+      this.postText = this.editedText;      
     }
 
     this.auth.user$.subscribe(user => {
@@ -108,27 +110,31 @@ cloudname = "dpevuiym0";
 
   openWidget() {
     this.myWidget.open();
+    if (this.isEditMode) {
+      this.chooseNewImage = true;
+    }
   }
 
   postNewPost() {
     if (NewsFeedComponent.isEditMode) {
-      const editedPostData = {
-        postText: this.postText,
-        postImgUrl: this.editedImgUrl,
-        postVideoUrl: this.editedVideoUrl,
-        dateCreated: this.editedDateCreated,
-        userId: this.userId,
-        postId: this.editedPostId,        
-      }
-      this.newpostService.updateUserPost(editedPostData).subscribe(
+      if (this.chooseNewImage) {
+        const fullyEditedPostData = {
+          postText: this.postText,
+          postImgUrl: this.postImgUrl,
+          postVideoUrl: this.postVideoUrl,
+          dateCreated: this.editedDateCreated,
+          userId: this.userId,
+          postId: this.editedPostId,
+        }
+        this.newpostService.updateUserPost(fullyEditedPostData).subscribe(
         response => {
           console.log('Post updated successfully:', response);
           // Optionally reset form fields here
           this.postText = '';
           this.postImgUrl = '';
           this.postVideoUrl = '';
-          NewsFeedComponent.isEditMode = false;
-          NewsFeedComponent.editedText = '';          
+          this.isEditMode = false;
+          //NewsFeedComponent.editedText = '';          
           this.close.emit();
         }
         ,
@@ -136,6 +142,32 @@ cloudname = "dpevuiym0";
           console.error('Error updating post:', error);
         }
     );
+      } else {
+      const editedPostData = {
+        postText: this.postText,
+        postImgUrl: this.editedImgUrl,
+        postVideoUrl: this.editedVideoUrl,
+        dateCreated: this.editedDateCreated,
+        userId: this.userId,
+        postId: this.editedPostId,        
+      }    
+      this.newpostService.updateUserPost(editedPostData).subscribe(
+        response => {
+          console.log('Post updated successfully:', response);
+          // Optionally reset form fields here
+          this.postText = '';
+          this.postImgUrl = '';
+          this.postVideoUrl = '';
+          this.isEditMode = false;
+          //NewsFeedComponent.editedText = '';          
+          this.close.emit();
+        }
+        ,
+        error => {
+          console.error('Error updating post:', error);
+        }
+    );
+      }
   } else {const postData = {
       postText: this.postText,
       postImgUrl: this.postImgUrl,
