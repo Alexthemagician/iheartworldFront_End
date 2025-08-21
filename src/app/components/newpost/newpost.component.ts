@@ -14,7 +14,7 @@ declare const cloudinary: any;
 @Component({
   selector: 'app-newpost',
   standalone: true,
-  imports: [FormsModule, CommonModule],  
+  imports: [FormsModule, CommonModule, NewsFeedComponent],  
   templateUrl: './newpost.component.html',
   styleUrl: './newpost.component.css'
 })

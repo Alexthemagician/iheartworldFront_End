@@ -30,4 +30,5 @@ export class SidebarComponent {
   hideNewsFeed() {
     this.isNewsFeedVisible = false;
   }
+  
 }

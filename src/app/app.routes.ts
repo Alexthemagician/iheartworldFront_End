@@ -6,7 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 export const routes: Routes = [
     { path: '', redirectTo: 'http://localhost:4200', pathMatch: 'full' },
     //{ path: 'home', component: HomeComponent },
-    { path: 'groups', component: GroupsComponent },
+    //{ path: 'groups', component: GroupsComponent },
     //{ path: 'Saved', component: SavedComponent },
     //{ path: 'Favorites', component: FavoritesComponent },
     //{ path: '', redirectTo: '/home', pathMatch: 'full' }
