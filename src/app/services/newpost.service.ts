@@ -24,4 +24,6 @@ updateUserPost(editedPostData: any): Observable<any> {
 getUserByEmail(email: string): Observable<any> {
   return this.httpClient.get<any>(`http://localhost:8080/api/user/by-email?email=${encodeURIComponent(email)}`);
 }
+
+
 }

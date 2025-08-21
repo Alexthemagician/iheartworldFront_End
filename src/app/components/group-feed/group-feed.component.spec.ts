@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserProfileComponent } from './user-profile.component';
+import { GroupFeedComponent } from './group-feed.component';
 
-describe('UserProfileComponent', () => {
-  let component: UserProfileComponent;
-  let fixture: ComponentFixture<UserProfileComponent>;
+describe('GroupFeedComponent', () => {
+  let component: GroupFeedComponent;
+  let fixture: ComponentFixture<GroupFeedComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserProfileComponent]
+      imports: [GroupFeedComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(UserProfileComponent);
+    fixture = TestBed.createComponent(GroupFeedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

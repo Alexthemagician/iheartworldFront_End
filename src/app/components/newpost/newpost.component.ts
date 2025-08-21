@@ -14,7 +14,7 @@ declare const cloudinary: any;
 @Component({
   selector: 'app-newpost',
   standalone: true,
-  imports: [FormsModule, CommonModule, NewsFeedComponent],  
+  imports: [FormsModule, CommonModule],  
   templateUrl: './newpost.component.html',
   styleUrl: './newpost.component.css'
 })
@@ -39,6 +39,8 @@ cloudname = "dpevuiym0";
   editedVideoUrl: string = NewsFeedComponent.editedVideoUrl;
   editedDateCreated: Date = NewsFeedComponent.editedDateCreated;
   chooseNewImage: boolean = false;
+  uploadResult: boolean = false;
+  
   
   
   
@@ -92,7 +94,8 @@ cloudname = "dpevuiym0";
 },
     (error: any, result: any) => {
       if (!error && result && result.event === "success") {
-        this.postImgUrl = result.info.secure_url;
+        this.postImgUrl = result.info.secure_url;// This could be an image or a video URL, named just for simplicity
+        this.uploadResult = true;
         console.log('Done! Here is the image info: ', result.info);
         const uploadedImage = document.getElementById('uploadedimage');
         const uploadedVideo = document.getElementById('uploadedvideo');
@@ -119,10 +122,11 @@ cloudname = "dpevuiym0";
   postNewPost() {    
 
     if (NewsFeedComponent.isEditMode) {
-      if (this.chooseNewImage) {
+      if (this.chooseNewImage && this.uploadResult === true) {
         if (this.postImgUrl.split('.').pop() === 'mp4') {
           this.postVideoUrl = this.postImgUrl;
-          this.postImgUrl = '';          
+          this.postImgUrl = '';
+          
         }
         const fullyEditedPostData = {
           postText: this.postText,
