@@ -8,6 +8,7 @@ import { User } from '../../common/user';
 import { NewpostComponent } from '../newpost/newpost.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { AuthService } from '@auth0/auth0-angular';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 
 
@@ -20,6 +21,7 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class NewsFeedComponent {
 
+  
   newsFeeds: Newsfeed[] = [];  
   isModalVisible = false;
   cloudname = "dpevuiym0";
@@ -31,15 +33,18 @@ export class NewsFeedComponent {
   postVideoUrl: string = '';
   postId: number = 0;
   
-  editedText: string = '';
+  
   private baseUrl = new URL('http://localhost:8080/api/userPosts');
-  static isEditMode: boolean;
-  static editedText: string = '';
-  static editedPostId: number = 0;
-  static editedImgUrl: string = '';
-  static editedVideoUrl: string = '';
-  static editedDateCreated: Date = new Date();
-  constructor(private newsFeedService: NewsfeedService, private auth: AuthService) {}
+
+  //Edited post variables
+  isEditMode: boolean = false;
+  editedText: string = '';  
+  editedPostId: number = 0;
+  editedImgUrl: string = '';
+  editedVideoUrl: string = '';
+  editedDateCreated: Date = new Date();
+
+  constructor(private newsFeedService: NewsfeedService, private auth: AuthService, private dataTransferService: DataTransferService) {}
 
   ngOnInit(): void {
     this.listNewsFeeds();
@@ -78,47 +83,49 @@ export class NewsFeedComponent {
   editPost(tempNewsfeed: any) {    
     
     this.isModalVisible = true;
-    NewsFeedComponent.isEditMode = true;
+    this.isEditMode = true;
     const match = tempNewsfeed._links?.self?.href.match(/\/(\d+)$/);
     const postId = match ? parseInt(match[1], 10) : null;
     this.postText = tempNewsfeed.postText;
     const editedText = this.postText;
-    NewsFeedComponent.editedText = editedText;
+    this.editedText = editedText;
     const editedImgUrl = tempNewsfeed.postImgUrl;
-    NewsFeedComponent.editedImgUrl = editedImgUrl;
+    this.editedImgUrl = editedImgUrl;
     const editedVideoUrl = tempNewsfeed.postVideoUrl;
-    NewsFeedComponent.editedVideoUrl = editedVideoUrl;
+    this.editedVideoUrl = editedVideoUrl;
     const editedDateCreated = tempNewsfeed.dateCreated;
-    NewsFeedComponent.editedDateCreated = editedDateCreated;
+    this.editedDateCreated = editedDateCreated;
     if (postId!== null) {
-    NewsFeedComponent.editedPostId = postId;
+    this.editedPostId = postId;
     }
     console.log(postId);
     console.log(editedText);
     this.listNewsFeeds();
-    return {
-      editedText: NewsFeedComponent.editedText,
-      isEditMode: NewsFeedComponent.isEditMode,
-      editedPostId: NewsFeedComponent.editedPostId,
-      editedImgUrl: NewsFeedComponent.editedImgUrl,
-      editedVideoUrl: NewsFeedComponent.editedVideoUrl,
-      editedDateCreated: NewsFeedComponent.editedDateCreated,
-    }
     
-    
-    
-    
-    
-    
+    this.sendData();
+          
+            
     
   }
+
+  sendData() {
+      const data = {
+        editedText: this.editedText,
+        isEditMode: this.isEditMode,
+        editedPostId: this.editedPostId,
+        editedImgUrl: this.editedImgUrl,
+        editedVideoUrl: this.editedVideoUrl,
+        editedDateCreated: this.editedDateCreated,
+      };
+      this.dataTransferService.changeData(data);
+    }
 
   showModal() {
     this.isModalVisible = true;
   }
 
   hideModal() {
-    NewsFeedComponent.isEditMode = false;
+    this.isEditMode = false;
     this.isModalVisible = false;
   }
   

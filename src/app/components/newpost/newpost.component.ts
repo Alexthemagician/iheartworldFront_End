@@ -5,8 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { NewpostService } from '../../services/newpost.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { CommonModule } from '@angular/common';
-import { NewsFeedComponent } from '../news-feed/news-feed.component';
+
 import { NewsfeedService } from '../../services/newsfeed.service';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 
 declare const cloudinary: any;
@@ -14,12 +15,13 @@ declare const cloudinary: any;
 @Component({
   selector: 'app-newpost',
   standalone: true,
-  imports: [FormsModule, CommonModule, NewsFeedComponent],  
+  imports: [FormsModule, CommonModule, ],  
   templateUrl: './newpost.component.html',
   styleUrl: './newpost.component.css'
 })
-export class NewpostComponent {
+export class NewpostComponent implements OnInit {
 
+  receivedData: any;
 
 
 [x: string]: any;
@@ -32,12 +34,12 @@ cloudname = "dpevuiym0";
   userId: string = '';  
   postText: string = '';
   postVideoUrl: string = '';
-  isEditMode: boolean = NewsFeedComponent.isEditMode;
-  editedText: string = NewsFeedComponent.editedText;
-  editedPostId: number = NewsFeedComponent.editedPostId;
-  editedImgUrl: string = NewsFeedComponent.editedImgUrl;
-  editedVideoUrl: string = NewsFeedComponent.editedVideoUrl;
-  editedDateCreated: Date = NewsFeedComponent.editedDateCreated;
+  isEditMode: boolean = false;
+  editedText: string = '';
+  editedPostId: number = 0;
+  editedImgUrl: string = '';
+  editedVideoUrl: string = '';
+  editedDateCreated: Date = new Date();
   chooseNewImage: boolean = false;
   uploadResult: boolean = false;
   
@@ -46,7 +48,9 @@ cloudname = "dpevuiym0";
   
   constructor(private newpostService: NewpostService,
     private auth: AuthService,
-    private newsFeedService: NewsfeedService) { }
+    private newsFeedService: NewsfeedService,
+    private dataTransferService: DataTransferService
+  ) { }
 
   @Output() close = new EventEmitter<void>();
 
@@ -62,6 +66,21 @@ cloudname = "dpevuiym0";
     if (this.isEditMode) {
       this.postText = this.editedText;      
     }
+
+    this.dataTransferService.currentData.subscribe(data => {
+      this.receivedData = data;
+      if (this.receivedData) {
+        this.isEditMode = this.receivedData.isEditMode;
+        this.editedText = this.receivedData.editedText;
+        this.editedPostId = this.receivedData.editedPostId;
+        this.editedImgUrl = this.receivedData.editedImgUrl;
+        this.editedVideoUrl = this.receivedData.editedVideoUrl;
+        this.editedDateCreated = this.receivedData.editedDateCreated;
+        if (this.isEditMode) {
+          this.postText = this.editedText;          
+        }
+      }
+    });
 
     this.auth.user$.subscribe(user => {
       if (user && user.email) {
@@ -121,7 +140,7 @@ cloudname = "dpevuiym0";
 
   postNewPost() {    
 
-    if (NewsFeedComponent.isEditMode) {
+    if (this.isEditMode) {
       if (this.chooseNewImage && this.uploadResult === true) {
         if (this.postImgUrl.split('.').pop() === 'mp4') {
           this.postVideoUrl = this.postImgUrl;
