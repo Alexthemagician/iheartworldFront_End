@@ -1,0 +1,9 @@
+<div #newGroupComponent class="group-modal-overlay"></div>
+<div class="group-modal-content" (click)="$event.stopPropagation()">  
+<h1>New Group</h1>  
+<textarea id="group-name" placeholder="Enter a group name..." name="usertext" class="textarea" [(ngModel)]="groupName"></textarea>
+
+<button class="group-submit-button" (click)="addNewGroup()">Submit</button>
+<button class="group-submit-button" (click)="closeGroupModal()">Close</button>
+
+</div>

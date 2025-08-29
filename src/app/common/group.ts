@@ -6,7 +6,7 @@ export class Group {
                 public groupDescription: string,
                 public groupImgUrl: string,
                 public membersList: User[],
-                public groupAdmin: User,
+                public groupAdmin: string,
                 public dateCreated: Date,
             ) {
     }
