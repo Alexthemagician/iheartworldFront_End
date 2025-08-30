@@ -9,8 +9,5 @@ export class Newsfeed {
     ) {
 
     }
-    public emojiList: string[] = [];
-    public addEmoji(emoji: string) {
-        this.emojiList.push(emoji);
-    }
+    
 }

@@ -49,7 +49,7 @@ cloudname = "dpevuiym0";
   constructor(private newpostService: NewpostService,
     private auth: AuthService,
     private newsFeedService: NewsfeedService,
-    private dataTransferService: DataTransferService
+    protected dataTransferService: DataTransferService
   ) { }
 
   @Output() close = new EventEmitter<void>();

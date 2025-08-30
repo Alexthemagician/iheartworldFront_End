@@ -6,6 +6,7 @@ import { Group } from '../../common/group';
 import { User } from '../../common/user';
 import { AuthService } from '@auth0/auth0-angular';
 import { DataTransferService } from '../../services/data-transfer.service';
+import { NewpostComponent } from '../newpost/newpost.component';
 
 @Component({
   selector: 'app-new-group',
@@ -15,57 +16,49 @@ import { DataTransferService } from '../../services/data-transfer.service';
   styleUrl: './new-group.component.css',
   providers: [DataTransferService]
 })
-export class NewGroupComponent implements OnInit {
+export class NewGroupComponent extends NewpostComponent implements OnInit {
   groupName: string = '';
-  groupId: number = 0;
+  groupId: any;
   groupDescription: string = '';
   groupImgUrl: string = '';
   membersList: User[] = [];
-  groupAdmin: string = '';
+  
   dateCreated: Date = new Date();
   isModalVisible: boolean = true;
   groupList: Group[] = [];
-  userId: string = '';
-
-   @Output() close = new EventEmitter<void>();
-
-   constructor(private auth: AuthService, private dataTransferService: DataTransferService) { }
-
-   closeModal(): void {
-    this.isModalVisible = false;    
-    this.close.emit();
-   }
-
-  ngOnInit() {
-    this.auth.user$.subscribe(user => {
-      if (user && user.email) {
-        this.dataTransferService.getUserByEmail(user.email).subscribe(
-          backendUser => {
-            this.userId = backendUser.userName;
-            this.groupAdmin = this.userId;
-          }
-        );
-      }
-    });
+  
+  
+  private groupUrl = 'http://localhost:8080/api/groups';   
+  
+  get groupAdmin(): string {
+    return this.userId;
   }
-
+  
   addNewGroup() {
-    const newGroup: Group = {
-      groupId: this.groupList.length + 1,
+    const newGroup: Group = { 
+      groupId: 0, // Backend will assign the ID     
       groupName: this.groupName,
       groupDescription: this.groupDescription,
-      groupImgUrl: this.groupImgUrl,
+      groupImgUrl: this.postImgUrl,
       membersList: this.membersList,
-      groupAdmin: this.groupAdmin,
+      groupAdmin: this.userId,
       dateCreated: this.dateCreated
-    };
-    this.groupList.push(newGroup);
-    this.groupName = '';
+    };    
+
+    this.dataTransferService.postGroupData(newGroup).subscribe(
+      response => {
+        console.log('Group created successfully:', response);
+        this.closeGroupModal();
+      },
+      error => {
+        console.error('Error creating group:', error);
+      }
+    );
   }
 
   closeGroupModal() {
     this.isModalVisible = false;
-    console.log(this.groupAdmin);
+    console.log(this.groupAdmin);    
     this.close.emit();
   }
 

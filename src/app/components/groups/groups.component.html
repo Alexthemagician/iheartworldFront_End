@@ -7,7 +7,8 @@
 <h1 class="groups-title">Groups</h1>
 <button class="create-group-button" (click)="openCreateGroupModal()">Create New Group</button>
 <app-new-group *ngIf="isModalVisible" (close)="hideModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-new-group>
-<!--<ul *ngFor="let group of groupList">
-    <li><a >{{ group.groupName }}</a></li>
+<ul *ngFor="let group of groupList" id="groups-list">
+    <li><a routerLink="/groupfeed/{{ group.groupId }}">{{ group.groupName }}</a></li>
 </ul>
--->
+
+

@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Group } from '../common/group';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataTransferService {
 
+  private groupUrl = 'http://localhost:8080/api/groups';
   private dataSource = new BehaviorSubject<any>(null);
   currentData = this.dataSource.asObservable();
 
@@ -19,6 +22,32 @@ export class DataTransferService {
   getUserByEmail(email: string): Observable<any> {
     return this.httpClient.get<any>(`http://localhost:8080/api/user/by-email?email=${encodeURIComponent(email)}`);
   }
+
+  postGroupData(groupData: any): Observable<any> {
+  return this.httpClient.post<any>(this.groupUrl, groupData);
+}
+
+  getGroups(): Observable<Group[]> {
+    return this.httpClient.get<GetResponse>(this.groupUrl).pipe(
+      map((response: GetResponse): Group[] => response._embedded.groups)
+    );
+  }
+
+  getGroupById(groupId: number): Observable<any> {
+    return this.httpClient.get<Group>(`${this.groupUrl}/${groupId}`);
+  }
+
+  addMemberToGroup(groupId: number, member: string): Observable<any> {
+    return this.httpClient.post<any>(`${this.groupUrl}/${groupId}`, { member });
+  }
+}
+
+  
+
+interface GetResponse {
+  _embedded: {
+    groups: Group[];
+  };
 }
 
 
