@@ -1,10 +1,12 @@
+<app-navigation></app-navigation>
+<app-sidebar style="position: relative;"></app-sidebar>
 <div *ngIf="groupId !== 0" id="group-details">
     <h1>{{ groupName }}</h1>    
     <img src="{{ groupImgUrl }}" alt="{{ groupName }}" id="group-img" />
     <p>{{ groupDescription }}</p>
     <h2 id="members">Members</h2>
     <ul>
-        <li *ngFor="let member of members" id="member-list">{{ member }}</li>
+        <li *ngFor="let memberName of members" id="member-list">{{ memberName }}</li>
     </ul>
     <p>Date Created: {{ dateCreated | date }}</p>
 </div>

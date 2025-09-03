@@ -46,7 +46,7 @@ cloudname = "dpevuiym0";
   
   
   
-  constructor(private newpostService: NewpostService,
+  constructor(protected newpostService: NewpostService,
     private auth: AuthService,
     private newsFeedService: NewsfeedService,
     protected dataTransferService: DataTransferService

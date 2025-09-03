@@ -18,7 +18,7 @@ import { NewpostComponent } from '../newpost/newpost.component';
 })
 export class NewGroupComponent extends NewpostComponent implements OnInit {
   groupName: string = '';
-  groupId: any;
+  groupId: number = 0;
   groupDescription: string = '';
   groupImgUrl: string = '';
   membersList: User[] = [];
@@ -26,6 +26,7 @@ export class NewGroupComponent extends NewpostComponent implements OnInit {
   dateCreated: Date = new Date();
   isModalVisible: boolean = true;
   groupList: Group[] = [];
+  members: string[] = [];
   
   
   private groupUrl = 'http://localhost:8080/api/groups';   
@@ -35,8 +36,7 @@ export class NewGroupComponent extends NewpostComponent implements OnInit {
   }
   
   addNewGroup() {
-    const newGroup: Group = { 
-      groupId: 0, // Backend will assign the ID     
+    const newGroup = {          
       groupName: this.groupName,
       groupDescription: this.groupDescription,
       groupImgUrl: this.postImgUrl,
@@ -52,6 +52,7 @@ export class NewGroupComponent extends NewpostComponent implements OnInit {
       },
       error => {
         console.error('Error creating group:', error);
+        console.log(error);
       }
     );
   }

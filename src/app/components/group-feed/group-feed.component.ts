@@ -4,11 +4,13 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { Group } from '../../common/group';
 import { RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { NavigationComponent } from "../navigation/navigation.component";
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-group-feed',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, NavigationComponent, SidebarComponent],
   templateUrl: './group-feed.component.html',
   styleUrls: ['./group-feed.component.css'],
   providers: [DataTransferService]
@@ -30,6 +32,7 @@ export class GroupFeedComponent implements OnInit {
       const groupId = +params['id']; // Convert string to number
       if (groupId) {
         this.loadGroupById(groupId);
+        this.loadGroupMembers(groupId);
       }
     });
   }
@@ -48,20 +51,31 @@ export class GroupFeedComponent implements OnInit {
     
   }
 
-  loadGroupById(groupId: number) {
+  loadGroupById(groupId: number) {    
     this.dataTransferService.getGroupById(groupId).subscribe(
       data => {
         this.groupId = data.groupId;
         this.groupName = data.groupName;
         this.groupDescription = data.groupDescription;
-        this.groupImgUrl = data.groupImgUrl;
-        this.members.push(data.members);
+        this.groupImgUrl = data.groupImgUrl;             
         this.dateCreated = data.dateCreated;
         console.log('Group details fetched successfully:', data);
         console.log(this.members);
       },
       error => {
         console.error('Error fetching group details:', error);
+      }
+    );
+  }
+
+  private loadGroupMembers(groupId: number) {
+    this.dataTransferService.getMembersOfGroup(groupId).subscribe(
+      data => {
+        this.members = data;
+        console.log(data);
+      },
+      error => {
+        console.error('Error fetching group members:', error);
       }
     );
   }

@@ -101,8 +101,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 #groups-list {
     list-style-type: none;
     padding-left: 1em;
-    position: absolute;
-    top: 12em;
+    position: relative;
+    bottom: 110em;
     left: 30%;    
     width: 30%;
     background-color: rgba(193, 225, 247, 0.5);
@@ -145,10 +145,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 #group-details {
-    position: absolute;
-    top: 0;
-    left: 1%;
-    width: 96%;    
+    position: relative;        
+    width: 70%; 
+    left: 22%; 
+    bottom: 138em;  
     height: auto;
     justify-content: center;  
     align-items: center;  
@@ -193,8 +193,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     height: 2em;        
     padding: 0 1em;
     position: relative;
-    left: 5%;
-    top: 48em;
+    left: 25%;
+    bottom: 165em;
 }
 
 #user_name {

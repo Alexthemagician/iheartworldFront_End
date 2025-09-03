@@ -10,6 +10,7 @@ import { Group } from '../common/group';
 export class DataTransferService {
 
   private groupUrl = 'http://localhost:8080/api/groups';
+  private groupMembersUrl = 'http://localhost:8080/api/groupMembers';
   private dataSource = new BehaviorSubject<any>(null);
   currentData = this.dataSource.asObservable();
 
@@ -40,6 +41,17 @@ export class DataTransferService {
   addMemberToGroup(groupId: number, member: string): Observable<any> {
     return this.httpClient.post<any>(`${this.groupUrl}/${groupId}`, { member });
   }
+
+  getMembersOfGroup(groupId: number): Observable<string[]> {
+    return this.httpClient.get<String[]>(`${this.groupMembersUrl}?groupId=${groupId}`).pipe(
+      map((response: any) => {
+        if (Array.isArray(response)) {        
+          return response.map((member: any) => member.memberName);
+        }
+        return [];
+      })
+    );
+  }
 }
 
   
@@ -47,6 +59,7 @@ export class DataTransferService {
 interface GetResponse {
   _embedded: {
     groups: Group[];
+    groupMembers: string[];
   };
 }
 
