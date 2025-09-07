@@ -7,5 +7,6 @@
     <a class="side-bar" routerLink="/favorites"><img id="favorites-icon" src="assets/favorites.svg" alt="Favorites Icon">Favorites</a>
     <button id="create-post" class="side-bar" (click)="showModal()">Create Post</button>
     <app-newpost *ngIf="isModalVisible" (close)="hideModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-newpost>
+    <app-grouppost *ngIf="isGroupModalVisible" (close)="hideGroupModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-grouppost>
 
 </div>

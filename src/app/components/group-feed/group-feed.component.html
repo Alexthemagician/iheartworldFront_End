@@ -9,5 +9,6 @@
         <li *ngFor="let memberName of members" id="member-list">{{ memberName }}</li>
     </ul>
     <p>Date Created: {{ dateCreated | date }}</p>
+    <button id="join-group-button" (click)="joinGroup()">Join Group</button>
 </div>
-<button id="join-group-button" (click)="joinGroup()">Join Group</button>
+

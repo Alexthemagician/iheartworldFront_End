@@ -3,12 +3,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService, AuthModule } from '@auth0/auth0-angular';
 import { CommonModule, DOCUMENT } from '@angular/common';
+import { RouterLink, RouterOutlet } from "@angular/router";
 
 
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  imports: [CommonModule, MatMenuModule, MatButtonModule, AuthModule],
+  imports: [CommonModule, MatMenuModule, MatButtonModule, AuthModule, RouterLink, RouterOutlet],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.css'
 })

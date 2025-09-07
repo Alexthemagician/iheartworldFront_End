@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class NewpostService {
 
   private baseUrl = 'http://localhost:8080/api/userPosts';
+  private groupPostUrl = 'http://localhost:8080/api/groupPosts';
 
   constructor(private httpClient:HttpClient) { }
 
@@ -19,6 +20,15 @@ export class NewpostService {
 
 updateUserPost(editedPostData: any): Observable<any> {
   return this.httpClient.put(this.baseUrl + '/' + editedPostData.postId, editedPostData);
+}
+
+//Group Posts
+postToGroupFeed(postData: any): Observable<any> {
+  return this.httpClient.post<any>(this.groupPostUrl, postData);
+}
+
+updateGroupPost(editedPostData: any): Observable<any> {
+  return this.httpClient.put(this.groupPostUrl + '/' + editedPostData.postId, editedPostData);
 }
 
 getUserByEmail(email: string): Observable<any> {

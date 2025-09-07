@@ -4,6 +4,7 @@ import { Newsfeed } from '../common/newsfeed';
 import { map, Observable } from 'rxjs';
 import { provideHttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { Groupfeed } from '../common/groupfeed';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,19 @@ import { BehaviorSubject } from 'rxjs';
 export class NewsfeedService {  
 
   private baseUrl = 'http://localhost:8080/api/userPosts';
+  private groupPostUrl = 'http://localhost:8080/api/groupPosts';
 
   constructor(private httpClient:HttpClient) { }
 
   getNewsFeed(): Observable<Newsfeed[]> {
     return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
       map(response => response._embedded.userPosts)
+    );
+  }
+
+  getGroupFeed(): Observable<Groupfeed[]> {
+    return this.httpClient.get<GetResponse>(this.groupPostUrl).pipe(
+      map(response => response._embedded.groupPosts)
     );
   }
 
@@ -39,6 +47,7 @@ updateUserPost(post: Newsfeed): Observable<any> {
 interface GetResponse {
   _embedded: {
     userPosts: Newsfeed[];
+    groupPosts: Groupfeed[];
   };
 }
 

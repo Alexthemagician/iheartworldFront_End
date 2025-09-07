@@ -6,6 +6,8 @@ import { RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationComponent } from "../navigation/navigation.component";
 import { SidebarComponent } from "../sidebar/sidebar.component";
+import { Groupfeed } from '../../common/groupfeed';
+import { NewsfeedService } from '../../services/newsfeed.service';
 
 @Component({
   selector: 'app-group-feed',
@@ -18,6 +20,7 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
 export class GroupFeedComponent implements OnInit {
 
   groupList: Group[] = [];
+  groupFeeds: Groupfeed[] = [];
   groupId: number = 0; 
   groupName: string = '';
   groupDescription: string = '';
@@ -25,9 +28,10 @@ export class GroupFeedComponent implements OnInit {
   members: string[] = [];
   dateCreated: Date = new Date();
 
-  constructor(public dataTransferService: DataTransferService, private route: ActivatedRoute) {}
+  constructor(public dataTransferService: DataTransferService, private route: ActivatedRoute, private newsFeedService: NewsfeedService) {}
 
   ngOnInit(): void {
+    this.listGroupFeeds();
     this.route.params.subscribe(params => {
       const groupId = +params['id']; // Convert string to number
       if (groupId) {
@@ -35,6 +39,7 @@ export class GroupFeedComponent implements OnInit {
         this.loadGroupMembers(groupId);
       }
     });
+        
   }
 
   listAllGroups() {
@@ -59,8 +64,7 @@ export class GroupFeedComponent implements OnInit {
         this.groupDescription = data.groupDescription;
         this.groupImgUrl = data.groupImgUrl;             
         this.dateCreated = data.dateCreated;
-        console.log('Group details fetched successfully:', data);
-        console.log(this.members);
+        console.log('Group details fetched successfully:', data);        
       },
       error => {
         console.error('Error fetching group details:', error);
@@ -71,8 +75,7 @@ export class GroupFeedComponent implements OnInit {
   private loadGroupMembers(groupId: number) {
     this.dataTransferService.getMembersOfGroup(groupId).subscribe(
       data => {
-        this.members = data;
-        console.log(data);
+        this.members = data;        
       },
       error => {
         console.error('Error fetching group members:', error);
@@ -94,5 +97,14 @@ export class GroupFeedComponent implements OnInit {
         console.error('Error joining the group:', error);
       }
     );
+  }
+
+  listGroupFeeds() {
+    this.newsFeedService.getGroupFeed().subscribe(
+      data=> {
+        this.groupFeeds = data;
+        console.log(this.groupFeeds);
+      }
+    ) 
   }
 }
