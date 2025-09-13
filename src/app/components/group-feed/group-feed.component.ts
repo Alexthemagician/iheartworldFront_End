@@ -8,11 +8,15 @@ import { NavigationComponent } from "../navigation/navigation.component";
 import { SidebarComponent } from "../sidebar/sidebar.component";
 import { Groupfeed } from '../../common/groupfeed';
 import { NewsfeedService } from '../../services/newsfeed.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { User } from '../../common/user';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-group-feed',
   standalone: true,
-  imports: [CommonModule, RouterLink, NavigationComponent, SidebarComponent],
+  imports: [CommonModule, RouterLink, NavigationComponent, SidebarComponent, MatButtonModule, MatMenuModule],
   templateUrl: './group-feed.component.html',
   styleUrls: ['./group-feed.component.css'],
   providers: [DataTransferService]
@@ -27,8 +31,17 @@ export class GroupFeedComponent implements OnInit {
   groupImgUrl: string = '';
   members: string[] = [];
   dateCreated: Date = new Date();
+  userId: string = '';
+  isModalVisible = false;
+  isEditMode: boolean = false;
+  postText: string = '';
+  editedText: string = '';
+  editedImgUrl: string = '';
+  editedVideoUrl: string = '';
+  editedDateCreated: Date = new Date();
+  editedPostId: number = 0;
 
-  constructor(public dataTransferService: DataTransferService, private route: ActivatedRoute, private newsFeedService: NewsfeedService) {}
+  constructor(public dataTransferService: DataTransferService, private route: ActivatedRoute, private newsFeedService: NewsfeedService, private auth: AuthService) {}
 
   ngOnInit(): void {
     this.listGroupFeeds();
@@ -39,8 +52,28 @@ export class GroupFeedComponent implements OnInit {
         this.loadGroupMembers(groupId);
       }
     });
+    this.auth.user$.subscribe(user => {
+      if (user && user.email) {
+        this.newsFeedService.getUserByEmail(user.email).subscribe(
+          backendUser => {
+            this.userId = backendUser.userName;                                   
+          },
+          error => {
+            console.error('Error fetching user from backend:', error);
+          }
+        );
+      }
+    });
         
   }
+
+  userIdMatch(): boolean {
+      if (this.userId === User.userName) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
   listAllGroups() {
     this.dataTransferService.getGroups().subscribe(
@@ -106,5 +139,62 @@ export class GroupFeedComponent implements OnInit {
         console.log(this.groupFeeds);
       }
     ) 
+  }
+
+  editPost(tempGroupFeed: any) {
+
+    this.isModalVisible = true;
+    this.isEditMode = true;
+    const match = tempGroupFeed._links?.self?.href.match(/\/(\d+)$/);
+    const postId = match ? parseInt(match[1], 10) : null;
+    this.postText = tempGroupFeed.postText;
+    const editedText = this.postText;
+    this.editedText = editedText;
+    const editedImgUrl = tempGroupFeed.postImgUrl;
+    this.editedImgUrl = editedImgUrl;
+    const editedVideoUrl = tempGroupFeed.postVideoUrl;
+    this.editedVideoUrl = editedVideoUrl;
+    const editedDateCreated = tempGroupFeed.dateCreated;
+    this.editedDateCreated = editedDateCreated;
+    if (postId!== null) {
+    this.editedPostId = postId;
+    }
+    console.log(postId);
+    console.log(editedText);
+    this.listGroupFeeds();
+    
+    this.sendData();
+          
+    
+            
+    
+  }
+  
+  sendData() {
+    throw new Error('Method not implemented.');
+  }
+
+  deletePost(tempGroupFeed: any) {
+    //NewsFeedComponent.isEditMode = true;
+    const match = tempGroupFeed._links?.self?.href.match(/\/(\d+)$/);
+    const postId = match ? parseInt(match[1], 10) : null;
+    console.log(postId);
+    console.log(match);
+    if (postId === parseInt(match[1], 10) && postId!== null) {      
+          this.newsFeedService.deleteGroupPost(postId).subscribe(
+            response => {
+              console.log('Post deleted successfully:', response);
+              this.listGroupFeeds(); // Refresh the group feed after deletion
+            },
+            error => {
+              console.error('Error deleting post:', error);
+            }
+          );         
+                         
+    }
+  }
+
+  showModal() {
+    this.isModalVisible = true;
   }
 }

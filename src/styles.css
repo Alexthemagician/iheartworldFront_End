@@ -75,6 +75,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     bottom: 25em;
 }
 
+#group-feed {
+    position: absolute;
+    width: 75%;
+    top: 50em;
+    left: 20%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding: 1em;
+    border: 1px solid lightgray;
+    border-radius: 0.5em;
+    background-color: rgba(193, 225, 247, 0.5);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    
+}
+
 .group-modal-content {
     background-color: white;
     padding: 2em;

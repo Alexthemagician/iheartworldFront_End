@@ -42,6 +42,16 @@ updateUserPost(post: Newsfeed): Observable<any> {
   deleteUserPost(postId: number): Observable<any> {
     return this.httpClient.delete(this.baseUrl + '/' + postId);
   }
+
+updateGroupPost(post: Groupfeed): Observable<any> {
+  return this.httpClient.put(this.groupPostUrl + '/' + post.postId, post);
+}
+
+deleteGroupPost(postId: number): Observable<any> {
+  return this.httpClient.delete(this.groupPostUrl + '/' + postId);
+
+}
+
 }
 
 interface GetResponse {

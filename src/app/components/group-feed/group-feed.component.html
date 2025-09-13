@@ -12,3 +12,40 @@
     <button id="join-group-button" (click)="joinGroup()">Join Group</button>
 </div>
 
+<div id="group-feed">
+<h1 class="mt-3 mb-3" id="bootstrap_override2"style="text-align: center; ">Group Feed</h1>
+<table class="table table-borderless" *ngFor="let tempGroupFeed of groupFeeds" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 10em ">
+    <thead>
+        <tr>
+            <th id="user_name">&#64;{{ tempGroupFeed.userId }}</th>
+            <button matButton [matMenuTriggerFor]="menu" id="postMenu"><img src="assets/menu.svg" alt="Menu"></button>
+            <mat-menu #menu="matMenu">                        
+                <button mat-menu-item *ngIf="userIdMatch" (click)="showModal()" (click)="editPost(tempGroupFeed)">Edit</button>
+
+                <button mat-menu-item *ngIf="userIdMatch" (click)="deletePost(tempGroupFeed)">Delete</button>
+            </mat-menu>
+        </tr>
+    </thead>
+    <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <tr>            
+            <td>{{ tempGroupFeed.postText }}</td>            
+        </tr>
+        <tr>
+            <td>@if (tempGroupFeed.postImgUrl !== null && tempGroupFeed.postImgUrl !== ''){<img src="{{ tempGroupFeed.postImgUrl }}" class="rounded float-start" style="height:25em; width: 50em; object-fit: cover;">}</td>
+        </tr>
+        <tr>
+            <td>@if (tempGroupFeed.postVideoUrl !== null && tempGroupFeed.postVideoUrl !== ''){<video style="max-width: 50em;" src="{{ tempGroupFeed.postVideoUrl }}" controls></video>}</td>
+        </tr>
+        <tr>
+            <td>{{ tempGroupFeed.dateCreated }}</td>
+        </tr>        
+        <tr>
+            <td style="position: relative; left: 25em; bottom: 1em"><input type="image" src="assets/heart_icon_black.svg" style="width: 5em; height: 5em;">Like</td>
+            
+        </tr> 
+        <tr>
+            <td id="bottom"><br></td>
+        </tr>      
+    </tbody>
+</table>
+</div>
