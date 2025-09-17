@@ -1,5 +1,5 @@
 <div #newPostComponent class="modal-overlay"></div>
-<div class="group-modal-content" (click)="$event.stopPropagation()">  
+<div class="modal-content" (click)="$event.stopPropagation()">  
 <h1>New Post</h1>  
 <textarea id="post" placeholder="Tell us your thoughts..." name="usertext" class="textarea" [(ngModel)]="postText">{{editedText}}</textarea>
 <div class="content" style="position: relative">

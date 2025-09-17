@@ -12,13 +12,15 @@ export class DataTransferService {
   private groupUrl = 'http://localhost:8080/api/groups';
   private groupMembersUrl = 'http://localhost:8080/api/groupMembers';
   private dataSource = new BehaviorSubject<any>(null);
-  currentData = this.dataSource.asObservable();
+  currentData = this.dataSource.asObservable(); 
 
   constructor(private httpClient: HttpClient) { }
 
   changeData(data: any) {
     this.dataSource.next(data);
   }
+
+  
 
   getUserByEmail(email: string): Observable<any> {
     return this.httpClient.get<any>(`http://localhost:8080/api/user/by-email?email=${encodeURIComponent(email)}`);

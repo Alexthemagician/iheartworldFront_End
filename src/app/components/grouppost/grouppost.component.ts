@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NewpostComponent } from '../newpost/newpost.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Basepostcomponent, PostData } from '../../common/basepostcomponent';
+import { AuthService } from '@auth0/auth0-angular';
+import { NewsfeedService } from '../../services/newsfeed.service';
+import { DataTransferService } from '../../services/data-transfer.service';
+import { NewpostService } from '../../services/newpost.service';
 
 @Component({
   selector: 'app-grouppost',
@@ -13,13 +18,26 @@ import { FormsModule } from '@angular/forms';
 
 
 
-export class GrouppostComponent extends NewpostComponent {
+export class GrouppostComponent extends Basepostcomponent {
 
   postComponent!: NewpostComponent;
-  isGroupPost: boolean = true;
-  groupId: number = 0;
+  isGroupPost: boolean = true;  
 
-  override postNewPost() {
+  constructor( protected override newpostService: NewpostService,
+        protected override auth: AuthService,
+        protected override newsFeedService: NewsfeedService,
+        protected override dataTransferService: DataTransferService
+      ) { super(newpostService, auth, newsFeedService, dataTransferService); }
+
+  protected create(d: PostData) { 
+    console.log('PostData being sent:', {...d, groupId: this.groupId});
+    return this.newpostService.postToGroupFeed({...d, groupId: this.groupId});
+ }
+  protected update(d: PostData) { 
+    console.log('PostData being sent for update:', {...d, groupId: this.groupId});
+    return this.newpostService.updateGroupPost({...d, groupId: this.groupId}); }
+
+  /* override postNewPost() {
     if (this.isGroupPost) {
       if (this.isEditMode) {
         if (this.chooseNewImage && this.uploadResult === true) {
@@ -107,6 +125,6 @@ export class GrouppostComponent extends NewpostComponent {
 
     }
   }
-
+ */
 
 }

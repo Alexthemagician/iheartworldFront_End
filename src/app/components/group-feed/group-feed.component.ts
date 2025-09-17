@@ -12,11 +12,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../common/user';
 import { AuthService } from '@auth0/auth0-angular';
+import { GrouppostComponent } from "../grouppost/grouppost.component";
 
 @Component({
   selector: 'app-group-feed',
   standalone: true,
-  imports: [CommonModule, RouterLink, NavigationComponent, SidebarComponent, MatButtonModule, MatMenuModule],
+  imports: [CommonModule, RouterLink, NavigationComponent, SidebarComponent, MatButtonModule, MatMenuModule, GrouppostComponent],
   templateUrl: './group-feed.component.html',
   styleUrls: ['./group-feed.component.css'],
   providers: [DataTransferService]
@@ -44,12 +45,11 @@ export class GroupFeedComponent implements OnInit {
   constructor(public dataTransferService: DataTransferService, private route: ActivatedRoute, private newsFeedService: NewsfeedService, private auth: AuthService) {}
 
   ngOnInit(): void {
-    this.listGroupFeeds();
     this.route.params.subscribe(params => {
       const groupId = +params['id']; // Convert string to number
       if (groupId) {
         this.loadGroupById(groupId);
-        this.loadGroupMembers(groupId);
+        this.loadGroupMembers(groupId);        
       }
     });
     this.auth.user$.subscribe(user => {
@@ -97,6 +97,11 @@ export class GroupFeedComponent implements OnInit {
         this.groupDescription = data.groupDescription;
         this.groupImgUrl = data.groupImgUrl;             
         this.dateCreated = data.dateCreated;
+        this.sendNewPostData();
+        
+        // Load group feeds after groupId is set
+        this.listGroupFeeds();
+        
         console.log('Group details fetched successfully:', data);        
       },
       error => {
@@ -124,7 +129,7 @@ export class GroupFeedComponent implements OnInit {
     this.dataTransferService.addMemberToGroup(this.groupId, 'currentUser').subscribe(
       response => {
         console.log('Successfully joined the group:', response);
-        // Optionally, update the members list or provide feedback to the user
+        
       },
       error => {
         console.error('Error joining the group:', error);
@@ -133,17 +138,40 @@ export class GroupFeedComponent implements OnInit {
   }
 
   listGroupFeeds() {
-    this.newsFeedService.getGroupFeed().subscribe(
+    console.log('Loading group feeds for groupId:', this.groupId);
+    this.newsFeedService.getGroupFeedById(this.groupId).subscribe(
       data=> {
         this.groupFeeds = data;
-        console.log(this.groupFeeds);
-      }
-    ) 
+        console.log('Group feeds loaded:', this.groupFeeds);
+        console.log('Number of posts for this group:', this.groupFeeds.length);
+
+        const filteredFeeds = data.filter((feed: any) => {
+        const feedGroupId = feed.groupId || (feed as any).groupId;
+        console.log('Post groupId:', feedGroupId, 'Current groupId:', this.groupId);
+        return feedGroupId === this.groupId;
+      });
+      
+      this.groupFeeds = filteredFeeds;
+      console.log('Filtered group feeds:', this.groupFeeds);
+      console.log('Number of posts for group', this.groupId + ':', this.groupFeeds.length);
+      
+      // Debug: Show all groupIds in the response
+      data.forEach((feed: any, index: number) => {
+        console.log(`Post ${index + 1}: groupId = ${feed.groupId || (feed as any).groupId}`);
+      });
+    },
+    error => {
+      console.error('Error loading group feeds:', error);
+    }
+  );
+
+
+
+    
   }
 
   editPost(tempGroupFeed: any) {
-
-    this.isModalVisible = true;
+    
     this.isEditMode = true;
     const match = tempGroupFeed._links?.self?.href.match(/\/(\d+)$/);
     const postId = match ? parseInt(match[1], 10) : null;
@@ -160,18 +188,37 @@ export class GroupFeedComponent implements OnInit {
     this.editedPostId = postId;
     }
     console.log(postId);
-    console.log(editedText);
-    this.listGroupFeeds();
+    console.log(editedText);    
     
     this.sendData();
           
-    
+    this.isModalVisible = true;
             
     
   }
   
   sendData() {
-    throw new Error('Method not implemented.');
+    const data = {
+      editedText: this.editedText,
+        isEditMode: this.isEditMode,
+        editedPostId: this.editedPostId,
+        editedImgUrl: this.editedImgUrl,
+        editedVideoUrl: this.editedVideoUrl,
+        editedDateCreated: this.editedDateCreated,
+        groupId: this.groupId
+      };
+      console.log('Sending data with groupId:', this.groupId); 
+      this.dataTransferService.changeData(data);
+  }
+
+  sendNewPostData() {
+    const data = {
+      isEditMode: false,
+      groupId: this.groupId
+    };
+
+    console.log('Sending new post data with groupId:', this.groupId); 
+    this.dataTransferService.changeData(data);
   }
 
   deletePost(tempGroupFeed: any) {
@@ -196,5 +243,12 @@ export class GroupFeedComponent implements OnInit {
 
   showModal() {
     this.isModalVisible = true;
+    this.isEditMode = false; 
+    this.sendNewPostData(); 
+  }
+
+  hideModal() {
+    this.isEditMode = false;
+    this.isModalVisible = false;
   }
 }

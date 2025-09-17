@@ -18,7 +18,7 @@ import { NewpostComponent } from '../newpost/newpost.component';
 })
 export class NewGroupComponent extends NewpostComponent implements OnInit {
   groupName: string = '';
-  groupId: number = 0;
+  //groupId: number = 0;
   groupDescription: string = '';
   groupImgUrl: string = '';
   membersList: User[] = [];

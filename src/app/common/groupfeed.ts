@@ -5,7 +5,8 @@ export class Groupfeed {
                 public postVideoUrl: string,
                 public dateCreated: Date,
                 public lastUpdated: Date,
-                public postId: number
+                public postId: number,
+                public groupId: number
     ) {
 
     }

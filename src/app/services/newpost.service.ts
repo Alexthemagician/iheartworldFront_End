@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Newsfeed } from '../common/newsfeed';
 import { Observable } from 'rxjs';
+import { PostData } from '../common/basepostcomponent';
 
 
 @Injectable({
@@ -14,20 +15,20 @@ export class NewpostService {
 
   constructor(private httpClient:HttpClient) { }
 
-  postToNewsFeed(postData: any): Observable<any> {
+  postToNewsFeed(postData: PostData): Observable<any> {
   return this.httpClient.post<any>(this.baseUrl, postData);
 }
 
-updateUserPost(editedPostData: any): Observable<any> {
+updateUserPost(editedPostData: PostData): Observable<any> {
   return this.httpClient.put(this.baseUrl + '/' + editedPostData.postId, editedPostData);
 }
 
 //Group Posts
-postToGroupFeed(postData: any): Observable<any> {
+postToGroupFeed(postData: PostData): Observable<any> {
   return this.httpClient.post<any>(this.groupPostUrl, postData);
 }
 
-updateGroupPost(editedPostData: any): Observable<any> {
+updateGroupPost(editedPostData: PostData): Observable<any> {
   return this.httpClient.put(this.groupPostUrl + '/' + editedPostData.postId, editedPostData);
 }
 

@@ -22,9 +22,17 @@ export class NewsfeedService {
     );
   }
 
-  getGroupFeed(): Observable<Groupfeed[]> {
-    return this.httpClient.get<GetResponse>(this.groupPostUrl).pipe(
-      map(response => response._embedded.groupPosts)
+  getGroupFeedById(groupId: number): Observable<Groupfeed[]> {
+    const url = `${this.groupPostUrl}?groupId=${groupId}`;
+    console.log('NewsfeedService: Fetching group posts from URL:', url);
+    
+    return this.httpClient.get<GetResponse>(url).pipe(
+      map(response => {
+        console.log('NewsfeedService: Raw response:', response);
+        const posts = response._embedded?.groupPosts || [];
+        console.log('NewsfeedService: Extracted posts:', posts);
+        return posts;
+      })
     );
   }
 

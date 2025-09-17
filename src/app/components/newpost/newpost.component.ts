@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 
 import { NewsfeedService } from '../../services/newsfeed.service';
 import { DataTransferService } from '../../services/data-transfer.service';
+import { Basepostcomponent, PostData } from '../../common/basepostcomponent';
 
 
 declare const cloudinary: any;
@@ -19,18 +20,18 @@ declare const cloudinary: any;
   templateUrl: './newpost.component.html',
   styleUrl: './newpost.component.css'
 })
-export class NewpostComponent implements OnInit {
+export class NewpostComponent extends Basepostcomponent{
 
-  receivedData: any;
+  //receivedData: any;
 
 
-[x: string]: any;
+/* [x: string]: any;
 cloudname = "dpevuiym0";
   uploadPreset = "ml_default";
   myWidget: any;
-  private baseUrl = 'http://localhost:8080/api/userPosts';
+  private baseUrl = 'http://localhost:8080/api/userPosts'; */
   
-  postImgUrl: string = '';
+  /* postImgUrl: string = '';
   userId: string = '';  
   postText: string = '';
   postVideoUrl: string = '';
@@ -40,29 +41,32 @@ cloudname = "dpevuiym0";
   editedImgUrl: string = '';
   editedVideoUrl: string = '';
   editedDateCreated: Date = new Date();
-  chooseNewImage: boolean = false;
-  uploadResult: boolean = false;
+  chooseNewImage: boolean = false; 
+  uploadResult: boolean = false;*/
   
   
-  
-  
-  constructor(protected newpostService: NewpostService,
-    private auth: AuthService,
-    private newsFeedService: NewsfeedService,
-    protected dataTransferService: DataTransferService
-  ) { }
 
-  @Output() close = new EventEmitter<void>();
+
+  constructor( protected override newpostService: NewpostService,
+        protected override auth: AuthService,
+        protected override newsFeedService: NewsfeedService,
+        protected override dataTransferService: DataTransferService
+      ) { super(newpostService, auth, newsFeedService, dataTransferService); }
+
+  protected create(d: PostData) { return this.newpostService.postToNewsFeed(d); }
+  protected update(d: PostData) { return this.newpostService.updateUserPost(d); }
+
+  /* @Output() close = new EventEmitter<void>();
 
   closeModal(): void {   
     this.isEditMode = false; 
     this.postText = '';    
     this.close.emit();
     
-  }
+  } */
   
 
-  ngOnInit() {
+  /* ngOnInit() {
     if (this.isEditMode) {
       this.postText = this.editedText;      
     }
@@ -136,9 +140,9 @@ cloudname = "dpevuiym0";
     if (this.isEditMode) {
       this.chooseNewImage = true;
     }
-  }
+  } */
 
-  postNewPost() {    
+  /* postNewPost() {    
 
     if (this.isEditMode) {
       if (this.chooseNewImage && this.uploadResult === true) {
@@ -222,10 +226,10 @@ cloudname = "dpevuiym0";
       console.error('Error posting:', error);
     }
   );
-}
+} */
   
 
   
   
 }
-}
+

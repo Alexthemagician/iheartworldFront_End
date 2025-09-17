@@ -4,8 +4,8 @@
     <a class="nav-items" style="padding-right:2em"><img id="notifications-icon" src="assets/notifications.svg" alt="Notifications Icon">Notifications</a>
     <a class="nav-items" style="padding-right:2em"><img id="messages-icon" src="assets/messages.svg" alt="Messages Icon">Messages</a>   
     <button (click)="Login()" id="login-button" *ngIf="!isLoggedIn">Login</button>
-    <img id="profile-icon" src="assets/profile.svg" alt="Profile Icon">
-    <button matButton [matMenuTriggerFor]="menu" id="profile-button">Profile</button>
+
+    <button matButton [matMenuTriggerFor]="menu" id="profile-button"><img id="profile-icon" src="assets/profile.svg" alt="Profile Icon">Profile</button>
     <mat-menu #menu="matMenu">
         <button mat-menu-item><a>My Profile</a></button>
         <button mat-menu-item><a>Account</a></button>
