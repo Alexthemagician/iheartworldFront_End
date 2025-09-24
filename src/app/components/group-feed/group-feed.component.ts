@@ -35,6 +35,10 @@ export class GroupFeedComponent implements OnInit {
   userId: string = '';
   isModalVisible = false;
   isEditMode: boolean = false;
+  postCategory: string = '';
+  postTitle: string = '';
+  editedCategory: string = '';
+  editedTitle: string = '';
   postText: string = '';
   editedText: string = '';
   editedImgUrl: string = '';
@@ -174,10 +178,16 @@ export class GroupFeedComponent implements OnInit {
     
     this.isEditMode = true;
     const match = tempGroupFeed._links?.self?.href.match(/\/(\d+)$/);
-    const postId = match ? parseInt(match[1], 10) : null;
+    const postId = match ? parseInt(match[1], 10) : null;    
     this.postText = tempGroupFeed.postText;
+    this.postTitle = tempGroupFeed.postTitle;
+    this.postCategory = tempGroupFeed.postCategory;
     const editedText = this.postText;
     this.editedText = editedText;
+    const editedTitle = this.postTitle;
+    this.editedTitle = editedTitle;
+    const editedCategory = this.postCategory;
+    this.editedCategory = editedCategory;
     const editedImgUrl = tempGroupFeed.postImgUrl;
     this.editedImgUrl = editedImgUrl;
     const editedVideoUrl = tempGroupFeed.postVideoUrl;
@@ -199,7 +209,9 @@ export class GroupFeedComponent implements OnInit {
   
   sendData() {
     const data = {
-      editedText: this.editedText,
+        editedCategory: this.editedCategory,
+        editedTitle: this.editedTitle,
+        editedText: this.editedText,
         isEditMode: this.isEditMode,
         editedPostId: this.editedPostId,
         editedImgUrl: this.editedImgUrl,

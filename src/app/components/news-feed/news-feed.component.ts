@@ -9,13 +9,14 @@ import { NewpostComponent } from '../newpost/newpost.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { AuthService } from '@auth0/auth0-angular';
 import { DataTransferService } from '../../services/data-transfer.service';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 
 
 @Component({
   selector: 'app-news-feed',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatMenuModule, NewpostComponent, SidebarComponent],
+  imports: [CommonModule, MatButtonModule, MatMenuModule, NewpostComponent, SidebarComponent, SearchBarComponent],
   templateUrl: './news-feed.component.html',
   styleUrl: './news-feed.component.css'
 })
@@ -28,7 +29,9 @@ export class NewsFeedComponent {
   uploadPreset = "ml_default";
 
   postImgUrl: string = '';
-  userId: string = '';  
+  userId: string = ''; 
+  postCategory: string = '';
+  postTitle: string = ''; 
   postText: string = '';
   postVideoUrl: string = '';
   postId: number = 0;
@@ -38,6 +41,8 @@ export class NewsFeedComponent {
 
   //Edited post variables
   isEditMode: boolean = false;
+  editedCategory: string = '';  
+  editedTitle: string = '';
   editedText: string = '';  
   editedPostId: number = 0;
   editedImgUrl: string = '';
@@ -85,10 +90,16 @@ export class NewsFeedComponent {
     this.isModalVisible = true;
     this.isEditMode = true;
     const match = tempNewsfeed._links?.self?.href.match(/\/(\d+)$/);
-    const postId = match ? parseInt(match[1], 10) : null;
+    const postId = match ? parseInt(match[1], 10) : null;    
     this.postText = tempNewsfeed.postText;
+    this.postTitle = tempNewsfeed.postTitle;
+    this.postCategory = tempNewsfeed.postCategory;
     const editedText = this.postText;
     this.editedText = editedText;
+    const editedTitle = this.postTitle;
+    this.editedTitle = editedTitle;
+    const editedCategory = this.postCategory;
+    this.editedCategory = editedCategory;
     const editedImgUrl = tempNewsfeed.postImgUrl;
     this.editedImgUrl = editedImgUrl;
     const editedVideoUrl = tempNewsfeed.postVideoUrl;
@@ -110,6 +121,8 @@ export class NewsFeedComponent {
 
   sendData() {
       const data = {
+        editedCategory: this.editedCategory,
+        editedTitle: this.editedTitle,
         editedText: this.editedText,
         isEditMode: this.isEditMode,
         editedPostId: this.editedPostId,

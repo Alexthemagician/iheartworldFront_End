@@ -1,0 +1,53 @@
+<mat-form-field class="search-bar">
+  <input matInput #searchInput (keyup)="search(searchInput.value)" placeholder="Search">
+  <img id="search-icon" src="assets/search.svg" alt="Search Icon">
+  <button mat-button *ngIf="query" (click)="clearSearch()">Clear</button>
+</mat-form-field>
+<ng-container *ngIf="results.length > 0">
+  <table class="table table-borderless" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 10em ">
+    <ng-container *ngFor="let tempNewsFeed of results">
+      <thead>
+        <tr>
+          <th id="user_name">&#64;{{ tempNewsFeed.userId }}</th>
+        </tr>
+      </thead>
+      <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <tr>
+          <td>{{ tempNewsFeed.postCategory }}</td>
+        </tr>
+        <tr>
+          <td>{{ tempNewsFeed.postTitle }}</td>
+        </tr>
+        <tr>
+          <td>{{ tempNewsFeed.postText }}</td>
+        </tr>
+        <tr>
+          <td>
+            <ng-container *ngIf="tempNewsFeed.postImgUrl !== null && tempNewsFeed.postImgUrl !== ''">
+              <img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:25em; width: 50em; object-fit: cover;">
+            </ng-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <ng-container *ngIf="tempNewsFeed.postVideoUrl !== null && tempNewsFeed.postVideoUrl !== ''">
+              <video style="max-width: 50em;" src="{{ tempNewsFeed.postVideoUrl }}" controls></video>
+            </ng-container>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ tempNewsFeed.dateCreated | date }}</td>
+        </tr>
+        <tr>
+          <td style="position: relative; left: 25em; bottom: 1em"><input type="image" src="assets/heart_icon_black.svg" style="width: 5em; height: 5em;">Like</td>
+        </tr>
+        <tr>
+          <td id="bottom"><br></td>
+        </tr>
+      </tbody>
+    </ng-container>
+  </table>
+</ng-container>
+<ng-container *ngIf="results.length === 0 && query">
+  <p style="text-align: center;">No results found.</p>
+  <h1 style="text-align: center;">:(</h1>

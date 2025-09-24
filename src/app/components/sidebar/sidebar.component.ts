@@ -3,14 +3,15 @@ import { NewpostComponent } from '../newpost/newpost.component';
 import { CommonModule } from '@angular/common';
 import { GrouppostComponent } from '../grouppost/grouppost.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
-import { DataTransferService } from '../../services/data-transfer.service';``
+import { DataTransferService } from '../../services/data-transfer.service';
+import { SearchBarComponent } from "../search-bar/search-bar.component";``
 
 
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [NewpostComponent, CommonModule, RouterLink, RouterOutlet, GrouppostComponent],
+  imports: [NewpostComponent, CommonModule, RouterLink, RouterOutlet, GrouppostComponent, SearchBarComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })

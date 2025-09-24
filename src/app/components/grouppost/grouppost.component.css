@@ -18,7 +18,7 @@
     border-radius: 10px;
     text-align: center;
     width: fit-content;
-    height: 30%;    
+    height: 50%;    
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     position: fixed;
     top: 50px;
@@ -34,4 +34,41 @@
     border-radius: 0.5em; 
     border-color:aqua;
     align-items: center;
+}
+
+.radio {
+    display: inline-block;
+    margin: 0.5em 0;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.8em;
+    margin-top: 0.25em;
+    display: block;
+}
+
+.form-submit-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 0.75em;
+    border: 1px solid #f5c6cb;
+    border-radius: 0.25em;
+    margin-top: 1em;
+    position: relative;
+    bottom: 1em;
+}
+
+.submit-button:disabled, .submit-button.disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.category-section {
+    margin-bottom: 1em;
+}
+
+.ng-valid.ng-touched {
+    border: 2px solid #28a745;
 }

@@ -19,6 +19,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     
 }
 
+#search-icon {
+    position: relative;
+    right: 1em;
+    bottom: 1.5em;
+    width: 1em;
+    height: 1em;
+}
+
 #postMenu {
     position: relative; 
     left: 18em; 
@@ -104,7 +112,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     list-style-type: none;
     padding-left: 1em;
     position: relative;
-    bottom: 110em;
+    bottom: 108em;
     left: 30%;    
     width: 30%;
     background-color: rgba(193, 225, 247, 0.5);
@@ -262,13 +270,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     left: 0em;
 }
 
-#search-icon {
-    width: 1em;
-    height: 1em;
-    position: relative;
-    left: 0.8em;
-    top: 1.2em;
-}
 
 #category-icon, #groups-icon, #saved-icon, #favorites-icon {
     position: relative;

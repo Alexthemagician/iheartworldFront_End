@@ -1,16 +1,40 @@
 <div #newPostComponent class="modal-overlay"></div>
 <div class="modal-content" (click)="$event.stopPropagation()">  
-<h1>New Post</h1>  
-<textarea id="post" placeholder="Tell us your thoughts..." name="usertext" class="textarea" [(ngModel)]="postText">{{editedText}}</textarea>
+<h1>{{ isEditMode ? 'Edit Post' : 'New Post' }}</h1>
+<form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
+  <div class="category-section">
+    <input type="radio" id="category1" name="category" value="General" class="radio" required [checked]="postCategory === 'General'" [(ngModel)]="postCategory" #categoryInput="ngModel">
+    <label for="category1">General</label>
+    <input type="radio" id="category2" name="category" value="Technology" class="radio" required [checked]="postCategory === 'Technology'" [(ngModel)]="postCategory">
+    <label for="category2">Technology</label>
+    <input type="radio" id="category3" name="category" value="Lifestyle" class="radio" required [checked]="postCategory === 'Lifestyle'" [(ngModel)]="postCategory">
+    <label for="category3">Lifestyle</label>
+    <input type="radio" id="category4" name="category" value="Funny" class="radio" required [checked]="postCategory === 'Funny'" [(ngModel)]="postCategory">
+    <label for="category4">Funny</label>
+    <div *ngIf="categoryInput.invalid && categoryInput.touched" class="error-message">Please select a category.</div>
+  </div>
+<textarea id="title" placeholder="Post Title" name="title" class="textarea" required minlength="3" maxlength="100" [(ngModel)]="postTitle" #titleInput="ngModel"></textarea>
+<div *ngIf="titleInput.invalid && titleInput.touched" class="error-message">
+  <span *ngIf="titleInput.errors?.['required']">Title is required.</span>
+  <span *ngIf="titleInput.errors?.['minlength']">Title must be at least 3 characters long.</span>
+  <span *ngIf="titleInput.errors?.['maxlength']">Title cannot be more than 100 characters long.</span>
+</div>
+<textarea id="post" placeholder="Tell us your thoughts..." name="usertext" class="textarea" required minlength="5" maxlength="2000" [(ngModel)]="postText" #textInput="ngModel"></textarea>
+<div *ngIf="textInput.invalid && textInput.touched" class="error-message">
+  <span *ngIf="textInput.errors?.['required']">Post content is required.</span>
+  <span *ngIf="textInput.errors?.['minlength']">Content must be at least 5 characters long.</span>
+  <span *ngIf="textInput.errors?.['maxlength']">Content cannot be more than 2000 characters long.</span>
+</div>
 <div class="content" style="position: relative">
 <!--<input type="file" id="photo" accept="image/*" name="file" style="z-index: 2; position: absolute; top: 3em; left: 1.5em; opacity: 0">-->
-<p id="uploads" placeholder="Upload Photo/Video" style="border: none; position: absolute; top: 2em; left: 5em">Upload Photo/Video</p>
+<p id="uploads" placeholder="Upload Photo/Video" style="border: none; position: absolute; top: 3em; left: 8em">Upload Photo/Video</p>
 <img src="assets/upload.svg" alt="Image of photo" style="width: 15%; position: absolute; top: 2em; left: 1.5em">
-<button class="submit-button" style="position: absolute; top: 6em; left: 0em" (click)="openWidget()">Upload</button>
+<button class="submit-button" style="position: absolute; top: 3em; left: 1.5em; background-color: transparent; border-color: transparent; color: transparent; padding: 2em 2em 2em 2em" (click)="openWidget()">Upload</button>
 <div class="thumbnails"></div>
-<button class="submit-button" (click)="postNewPost()" style="position: absolute; top: 6em; left: 4.5em">Submit</button>
-<button class="submit-button" (click)="closeModal()" style="position: absolute; top: 6em; left: 19em">Close</button>
-
+<button class="submit-button" [disabled]="postForm.invalid" [class.disabled]="postForm.invalid" (click)="postNewPost()" style="position: absolute; top: 10em; left: 10em">{{ isEditMode ? 'Update' : 'Submit' }}</button>
+<button class="submit-button" (click)="closeModal()" style="position: absolute; top: 10em; left: 28em">Close</button>
 </div>
+</form>
+<div *ngIf="postForm.invalid && postForm.touched" class="form-submit-error">Please complete all required fields.</div>
 </div>
 

@@ -7,6 +7,8 @@ import { NewsfeedService } from "../services/newsfeed.service";
 import { OnInit } from "@angular/core";
 
 export interface PostData {
+    postCategory: string;
+    postTitle: string;
     postText: string;
     postImgUrl: string;
     postVideoUrl: string;
@@ -20,11 +22,15 @@ export interface PostData {
 
 @Directive()
 export abstract class Basepostcomponent implements OnInit {
+    postCategory: string = '';
+    postTitle: string = '';
     postText: string = '';
     postImgUrl: string = '';
     postVideoUrl: string = '';
     userId: string = '';
     isEditMode: boolean = false;
+    editedCategory: string = '';
+    editedTitle: string = '';
     editedText: string = '';
     editedPostId: number = 0
     editedImgUrl: string = '';
@@ -55,20 +61,26 @@ export abstract class Basepostcomponent implements OnInit {
     
       closeModal(): void {   
         this.isEditMode = false; 
-        this.postText = '';    
+        this.postText = ''; 
+        this.postTitle = '';
+        this.postCategory = '';   
         this.close.emit();
         
       }
 
     ngOnInit() {
     if (this.isEditMode) {
-      this.postText = this.editedText;      
+      this.postText = this.editedText;
+      this.postTitle = this.editedTitle;
+      this.postCategory = this.editedCategory;      
     }
 
     this.dataTransferService.currentData.subscribe(data => {
       this.receivedData = data;
       if (this.receivedData) {
         this.isEditMode = this.receivedData.isEditMode;
+        this.editedCategory = this.receivedData.editedCategory;
+        this.editedTitle = this.receivedData.editedTitle;
         this.editedText = this.receivedData.editedText;
         this.editedPostId = this.receivedData.editedPostId;
         this.editedImgUrl = this.receivedData.editedImgUrl;
@@ -76,7 +88,9 @@ export abstract class Basepostcomponent implements OnInit {
         this.editedDateCreated = this.receivedData.editedDateCreated;
         this.groupId = this.receivedData.groupId;
         if (this.isEditMode) {
-          this.postText = this.editedText;          
+          this.postText = this.editedText;
+          this.postTitle = this.editedTitle;
+          this.postCategory = this.editedCategory;
         }
       }
     });    
@@ -151,6 +165,8 @@ export abstract class Basepostcomponent implements OnInit {
 
         const baseData: PostData = {
         postText: this.postText,
+        postCategory: this.postCategory,
+        postTitle: this.postTitle,
         postImgUrl: this.isEditMode && !this.chooseNewImage ? this.editedImgUrl : this.postImgUrl,
         postVideoUrl: this.isEditMode && !this.chooseNewImage ? this.editedVideoUrl : this.postVideoUrl,
         userId: this.userId,
@@ -173,6 +189,8 @@ export abstract class Basepostcomponent implements OnInit {
   }
 
   protected resetForm() {
+        this.postCategory = '';
+        this.postTitle = '';
         this.postText = '';
         this.postImgUrl = '';
         this.postVideoUrl = '';
