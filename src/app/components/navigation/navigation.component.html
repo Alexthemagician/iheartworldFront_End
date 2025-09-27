@@ -7,9 +7,9 @@
 
     <button matButton [matMenuTriggerFor]="menu" id="profile-button"><img id="profile-icon" src="assets/profile.svg" alt="Profile Icon">Profile</button>
     <mat-menu #menu="matMenu">
-        <button mat-menu-item><a>My Profile</a></button>
-        <button mat-menu-item><a>Account</a></button>
-        <button mat-menu-item>Settings</button>
+        <button mat-menu-item><a routerLink="/profile">My Profile</a></button>
+        <button mat-menu-item><a routerLink="/account">Account</a></button>
+        <button mat-menu-item><a routerLink="/settings">Settings</a></button>
         <button mat-menu-item (click)="Logout()">Logout</button>
     </mat-menu>
 </div>

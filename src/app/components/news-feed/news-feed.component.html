@@ -8,9 +8,9 @@
             <th id="user_name">&#64;{{ tempNewsFeed.userId }}</th>
             <button matButton [matMenuTriggerFor]="menu" id="postMenu"><img src="assets/menu.svg" alt="Menu"></button>
             <mat-menu #menu="matMenu">                        
-                <button mat-menu-item *ngIf="userIdMatch" (click)="showModal()" (click)="editPost(tempNewsFeed)">Edit</button>
+                <button mat-menu-item *ngIf="userIdMatch(tempNewsFeed)" (click)="showModal()" (click)="editPost(tempNewsFeed)">Edit</button>
                 
-                <button mat-menu-item *ngIf="userIdMatch" (click)="deletePost(tempNewsFeed)">Delete</button>
+                <button mat-menu-item *ngIf="userIdMatch(tempNewsFeed)" (click)="deletePost(tempNewsFeed)">Delete</button>
             </mat-menu>
         </tr>
     </thead>

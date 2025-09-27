@@ -52,12 +52,13 @@ export class NewsFeedComponent {
   constructor(private newsFeedService: NewsfeedService, private auth: AuthService, private dataTransferService: DataTransferService) {}
 
   ngOnInit(): void {
-    this.listNewsFeeds();
+    this.listNewsFeeds();    
     this.auth.user$.subscribe(user => {
       if (user && user.email) {
         this.newsFeedService.getUserByEmail(user.email).subscribe(
           backendUser => {
-            this.userId = backendUser.userName;                                   
+            this.userId = backendUser.userName;
+            console.log(this.userId);                                            
           },
           error => {
             console.error('Error fetching user from backend:', error);
@@ -77,8 +78,8 @@ export class NewsFeedComponent {
 
   
 
-  userIdMatch(): boolean {
-    if (this.userId === User.userName) {
+  userIdMatch(tempNewsfeed: any): boolean {
+    if (this.userId === tempNewsfeed.userName) {
       return true;
     } else {
       return false;

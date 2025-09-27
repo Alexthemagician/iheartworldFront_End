@@ -5,7 +5,7 @@ export class User {
                 public userPassword: string,
                 public profileImgUrl: string,
                 public about: string,
-                public userPost: Array<string>,
+                public email: string,
     ) {
 
     }

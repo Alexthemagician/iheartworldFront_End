@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import { provideHttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Groupfeed } from '../common/groupfeed';
+import { User } from '../common/user';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,16 @@ export class NewsfeedService {
   return this.httpClient.get<any>(`http://localhost:8080/api/user/by-email?email=${encodeURIComponent(email)}`);
 }
 
+getUsers(): Observable<User[]> {
+  return this.httpClient.get<GetResponse>('http://localhost:8080/api/user').pipe(
+    map(response => response._embedded?.users)
+  );
+}
+
+postToUsers(user: any): Observable<any> {
+  return this.httpClient.post<any>('http://localhost:8080/api/user', user);
+}
+
 getUserPostById(postId: number): Observable<any> {
   return this.httpClient.get(this.baseUrl + '/' + postId);
 }
@@ -66,6 +77,7 @@ interface GetResponse {
   _embedded: {
     userPosts: Newsfeed[];
     groupPosts: Groupfeed[];
+    users: User[];
   };
 }
 

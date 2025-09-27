@@ -21,9 +21,9 @@
             <th id="user_name">&#64;{{ tempGroupFeed.userId }}</th>
             <button matButton [matMenuTriggerFor]="menu" id="postMenu"><img src="assets/menu.svg" alt="Menu"></button>
             <mat-menu #menu="matMenu">                        
-                <button mat-menu-item *ngIf="userIdMatch" (click)="showModal()" (click)="editPost(tempGroupFeed)">Edit</button>
+                <button mat-menu-item *ngIf="userIdMatch(tempGroupFeed)" (click)="showModal()" (click)="editPost(tempGroupFeed)">Edit</button>
 
-                <button mat-menu-item *ngIf="userIdMatch" (click)="deletePost(tempGroupFeed)">Delete</button>
+                <button mat-menu-item *ngIf="userIdMatch(tempGroupFeed)" (click)="deletePost(tempGroupFeed)">Delete</button>
             </mat-menu>
         </tr>
     </thead>

@@ -1,0 +1,24 @@
+<app-navigation></app-navigation>
+<app-sidebar style="position: relative;"></app-sidebar>
+<div class="profile-container">
+  <form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
+    <label for="userName">userName:</label>
+    <input type="text" id="userName" name="userName" required [ngModel]="userName" (ngModelChange)="userName = $event" />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required [ngModel]="email" (ngModelChange)="email = $event" />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required [ngModel]="userPassword" (ngModelChange)="userPassword = $event" />
+
+    <label for="about">About:</label>
+    <textarea id="about" name="about" required [ngModel]="about" (ngModelChange)="about = $event"></textarea>
+
+    <label for="profilePicture">Upload Profile Picture:</label>
+    <button (click)="openWidget()">Upload</button>
+    <div class="thumbnails"></div>
+    <img *ngIf="profileImgUrl" [src]="profileImgUrl" alt="Profile Picture" class="profile-picture-preview" />
+
+    <button type="submit" (click)="updateProfile()">Update Profile</button>
+  </form>
+</div>

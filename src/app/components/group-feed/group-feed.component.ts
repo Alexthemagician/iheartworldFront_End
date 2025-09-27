@@ -71,8 +71,8 @@ export class GroupFeedComponent implements OnInit {
         
   }
 
-  userIdMatch(): boolean {
-      if (this.userId === User.userName) {
+  userIdMatch(tempGroupFeed: any): boolean {
+      if (this.userId === tempGroupFeed.userName) {
         return true;
       } else {
         return false;
