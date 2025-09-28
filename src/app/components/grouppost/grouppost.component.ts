@@ -21,7 +21,8 @@ import { NewpostService } from '../../services/newpost.service';
 export class GrouppostComponent extends Basepostcomponent {
 
   postComponent!: NewpostComponent;
-  isGroupPost: boolean = true;  
+  isGroupPost: boolean = true;
+  
 
   constructor( protected override newpostService: NewpostService,
         protected override auth: AuthService,
@@ -38,9 +39,7 @@ export class GrouppostComponent extends Basepostcomponent {
     return this.newpostService.updateGroupPost({...d, groupId: this.groupId}); }  
 
     onSubmit(form: any) {
-    if (form.valid) {
-      this.postNewPost();
-    } else {
+    if (!form.valid) {      
       Object.keys(form.controls).forEach(key => {
         form.controls[key].markAsTouched();
       });

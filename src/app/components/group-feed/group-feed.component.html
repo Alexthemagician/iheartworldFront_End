@@ -9,7 +9,7 @@
         <li *ngFor="let memberName of members" id="member-list">{{ memberName }}</li>
     </ul>
     <p>Date Created: {{ dateCreated | date }}</p>
-    <button id="join-group-button" (click)="joinGroup()">Join Group</button>    
+    <button id="join-group-button" (click)="joinGroup()">{{ !isMember ? 'Join Group' : 'Leave Group' }}</button>    
 </div>
 <app-grouppost *ngIf="isModalVisible" (close)="hideModal()" >   
 </app-grouppost>

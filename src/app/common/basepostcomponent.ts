@@ -180,9 +180,15 @@ export abstract class Basepostcomponent implements OnInit {
 
     const op$ = this.isEditMode ? this.update(baseData) : this.create(baseData);
     return op$.subscribe({
-        next: () => this.resetForm(),
-        error: (err) => console.error('Post failed:', err),
-        complete: () => this.closeModal()
+        next: (response) => {
+            console.log('Post successful:', response);
+            this.resetForm();
+            this.closeModal();
+        },
+        error: (err) => {
+            console.error('Post failed:', err);            
+            alert('Failed to submit post. Please try again.');
+        }        
     });
 
         

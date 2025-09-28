@@ -29,7 +29,8 @@ export class SidebarComponent {
   editedDateCreated: Date = new Date();
   isGroupModalVisible = false;
   pathname: string = window.location.pathname;
-  pathMatch: RegExp = /^\/groupfeed(\/\d+)?$/; 
+  pathMatch: RegExp = /^\/groupfeed(\/\d+)?$/;
+  isMember: boolean = false;
 
   constructor(private dataTransferService: DataTransferService) {}
 
@@ -47,6 +48,11 @@ export class SidebarComponent {
           this.postText = this.editedText;          
         }
       }
+    });
+
+    this.dataTransferService.getMembersOfGroup(this.dataTransferService.getCurrentGroupId()).subscribe(members => {
+      this.isMember = members.includes(this.dataTransferService.getCurrentUserId());
+      console.log('Current user: ' + this.dataTransferService.getCurrentUserId());
     });
   }
 

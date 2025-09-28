@@ -44,6 +44,16 @@ export class DataTransferService {
     return this.httpClient.post<any>(`${this.groupUrl}/${groupId}`, { member });
   }
 
+  getCurrentGroupId(): number {
+    const currentData = this.dataSource.getValue();
+    return currentData ? currentData.groupId : 0;
+  }
+
+  getCurrentUserId(): string {
+    const currentData = this.dataSource.getValue();
+    return currentData ? currentData.userId : '';
+  }
+
   getMembersOfGroup(groupId: number): Observable<string[]> {
     return this.httpClient.get<String[]>(`${this.groupMembersUrl}?groupId=${groupId}`).pipe(
       map((response: any) => {

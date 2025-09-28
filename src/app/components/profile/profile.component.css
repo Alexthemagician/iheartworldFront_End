@@ -1,0 +1,140 @@
+.profile-container {
+    max-width: 600px;
+    margin: 2em auto;
+    padding: 2em;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5em;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.ng-valid.ng-touched {
+    border-color: #28a745 !important;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.85em;
+    margin-top: 0.25em;
+    display: block;
+}
+
+.form-submit-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 0.75em;
+    border: 1px solid #f5c6cb;
+    border-radius: 0.25em;
+    margin-top: 1em;
+}
+
+.readonly {
+    background-color: #f8f9fa !important;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.help-text {
+    color: #6c757d;
+    font-size: 0.8em;
+    font-style: italic;
+    margin-top: 0.25em;
+    display: block;
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 0.75em 2em;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: 1em;
+}
+
+.submit-button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.submit-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.cancel-button {
+    background-color: #6c757d;
+    color: white;
+    padding: 0.75em 2em;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.upload-button {
+    background-color: #28a745;
+    color: white;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.profile-picture-preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 1em;
+    border: 3px solid #ddd;
+}
+
+.loading-message {
+    text-align: center;
+    padding: 2em;
+    font-size: 1.2em;
+    color: #6c757d;
+}
+
+.info-message {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    padding: 0.75em;
+    border: 1px solid #bee5eb;
+    border-radius: 0.25em;
+    margin-top: 1em;
+}
+
+.user-info {
+    margin-bottom: 2em;
+    padding-top: 1em;
+    border-top: 1px solid #ddd;
+}

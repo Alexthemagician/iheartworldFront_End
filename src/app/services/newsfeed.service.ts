@@ -47,6 +47,10 @@ getUsers(): Observable<User[]> {
   );
 }
 
+updateUser(updateData: any): Observable<any> {
+  return this.httpClient.put(`http://localhost:8080/api/user/${updateData.id}`, updateData);
+}
+
 postToUsers(user: any): Observable<any> {
   return this.httpClient.post<any>('http://localhost:8080/api/user', user);
 }

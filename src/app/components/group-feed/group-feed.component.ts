@@ -45,6 +45,7 @@ export class GroupFeedComponent implements OnInit {
   editedVideoUrl: string = '';
   editedDateCreated: Date = new Date();
   editedPostId: number = 0;
+  isMember: boolean = false;
 
   constructor(public dataTransferService: DataTransferService, private route: ActivatedRoute, private newsFeedService: NewsfeedService, private auth: AuthService) {}
 
@@ -53,7 +54,10 @@ export class GroupFeedComponent implements OnInit {
       const groupId = +params['id']; // Convert string to number
       if (groupId) {
         this.loadGroupById(groupId);
-        this.loadGroupMembers(groupId);        
+        this.loadGroupMembers(groupId);
+        if (this.userId) {
+          this.isMember = this.members.includes(this.userId);
+        }
       }
     });
     this.auth.user$.subscribe(user => {

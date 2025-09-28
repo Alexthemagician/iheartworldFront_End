@@ -71,41 +71,41 @@ export class NewsFeedComponent {
   listNewsFeeds() {
     this.newsFeedService.getNewsFeed().subscribe(
       data=> {
-        this.newsFeeds = data;
+        this.newsFeeds = data;                
       }
     ) 
   }
 
   
 
-  userIdMatch(tempNewsfeed: any): boolean {
-    if (this.userId === tempNewsfeed.userName) {
+  userIdMatch(tempNewsFeed: any): boolean {
+    if (this.userId === tempNewsFeed.userId) {
       return true;
     } else {
       return false;
     }
   }
 
-  editPost(tempNewsfeed: any) {    
+  editPost(tempNewsFeed: any) {    
     
     this.isModalVisible = true;
     this.isEditMode = true;
-    const match = tempNewsfeed._links?.self?.href.match(/\/(\d+)$/);
-    const postId = match ? parseInt(match[1], 10) : null;    
-    this.postText = tempNewsfeed.postText;
-    this.postTitle = tempNewsfeed.postTitle;
-    this.postCategory = tempNewsfeed.postCategory;
+    const match = tempNewsFeed._links?.self?.href.match(/\/(\d+)$/);
+    const postId = match ? parseInt(match[1], 10) : null;
+    this.postText = tempNewsFeed.postText;
+    this.postTitle = tempNewsFeed.postTitle;
+    this.postCategory = tempNewsFeed.postCategory;
     const editedText = this.postText;
     this.editedText = editedText;
     const editedTitle = this.postTitle;
     this.editedTitle = editedTitle;
     const editedCategory = this.postCategory;
     this.editedCategory = editedCategory;
-    const editedImgUrl = tempNewsfeed.postImgUrl;
+    const editedImgUrl = tempNewsFeed.postImgUrl;
     this.editedImgUrl = editedImgUrl;
-    const editedVideoUrl = tempNewsfeed.postVideoUrl;
+    const editedVideoUrl = tempNewsFeed.postVideoUrl;
     this.editedVideoUrl = editedVideoUrl;
-    const editedDateCreated = tempNewsfeed.dateCreated;
+    const editedDateCreated = tempNewsFeed.dateCreated;
     this.editedDateCreated = editedDateCreated;
     if (postId!== null) {
     this.editedPostId = postId;
@@ -144,9 +144,9 @@ export class NewsFeedComponent {
   }
   
 
-  deletePost(tempNewsfeed: any) {
+  deletePost(tempNewsFeed: any) {
     //NewsFeedComponent.isEditMode = true;
-    const match = tempNewsfeed._links?.self?.href.match(/\/(\d+)$/);
+    const match = tempNewsFeed._links?.self?.href.match(/\/(\d+)$/);
     const postId = match ? parseInt(match[1], 10) : null;
     console.log(postId);
     console.log(match);

@@ -32,9 +32,7 @@ export class NewpostComponent extends Basepostcomponent{
   protected update(d: PostData) { return this.newpostService.updateUserPost(d); }   
 
   onSubmit(form: any) {
-    if (form.valid) {
-      this.postNewPost();
-    } else {
+    if (!form.valid) {      
       Object.keys(form.controls).forEach(key => {
         form.controls[key].markAsTouched();
       });
