@@ -1,3 +1,10 @@
 <app-main-page *ngIf="isLoggedIn"></app-main-page>
 <app-navigation *ngIf="!isLoggedIn"></app-navigation>
 
+<div class="home-page" *ngIf="!isLoggedIn">
+    <h1 class="welcome-message">Welcome to iHeartWorld!</h1>
+    <p class="description">Your gateway to a world of communities and connections awaits, in our guild of awesome adventurers.</p>
+    <img src="assets/LogoAnimation2.gif" alt="Homepage Image" class="homepage-gif">
+    <p class="description">Join us today and start exploring!</p>
+</div>
+

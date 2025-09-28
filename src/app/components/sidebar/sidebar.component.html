@@ -5,8 +5,10 @@
     <a class="side-bar" routerLink="/groups"><img id="groups-icon" src="assets/groups.svg" alt="Groups Icon">Groups</a>
     <a class="side-bar" routerLink="/friends"><img id="saved-icon" src="assets/friend.svg" alt="Saved Icon">Friends</a>
     <a class="side-bar" routerLink="/favorites"><img id="favorites-icon" src="assets/favorites.svg" alt="Favorites Icon">Favorites</a>
-    <button id="create-post" class="side-bar" (click)="showModal()" >Create Post</button>
+    <button id="create-post" class="side-bar" (click)="showModal()" [disabled]="!isMember">Create Post</button>
     <app-newpost *ngIf="isModalVisible" (close)="hideModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-newpost>
-    <app-grouppost *ngIf="isGroupModalVisible && isMember" (close)="hideGroupModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-grouppost>
+    <app-grouppost *ngIf="isGroupModalVisible" (close)="hideGroupModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-grouppost>
 
 </div>
+<div *ngIf="!isMember && pathMatch.test(pathname)" style="max-width: 20%; display: flex; justify-content: center; flex-direction: column; text-align: center; padding-top: 1em; color: red; bottom: 120em; position: relative;">
+    <p>You must be a member of the group to create a post.</p></div>

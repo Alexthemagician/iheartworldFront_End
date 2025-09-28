@@ -40,8 +40,23 @@ export class DataTransferService {
     return this.httpClient.get<Group>(`${this.groupUrl}/${groupId}`);
   }
 
-  addMemberToGroup(groupId: number, member: string): Observable<any> {
-    return this.httpClient.post<any>(`${this.groupUrl}/${groupId}`, { member });
+  addMemberToGroup(newMember: any): Observable<any> {
+    return this.httpClient.post<any>(this.groupMembersUrl, newMember);
+  }
+
+  getMemberId(groupId: number, memberName: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.groupMembersUrl}/by-id`, { params: { groupId, memberName } });
+    
+  }
+
+  removeMemberFromGroup(groupId: number, memberIdentifier: string | number): Observable<any> {
+    if (typeof memberIdentifier === 'string') {
+      // ✅ Delete by member name using query parameters
+      return this.httpClient.delete(`${this.groupMembersUrl}?groupId=${groupId}&memberName=${encodeURIComponent(memberIdentifier)}`);
+    } else {
+      // ✅ Delete by member ID using path parameters
+      return this.httpClient.delete(`${this.groupMembersUrl}/group/${groupId}/member/${memberIdentifier}`);
+    }
   }
 
   getCurrentGroupId(): number {
@@ -76,5 +91,5 @@ interface GetResponse {
 }
 
 
-  
+
 

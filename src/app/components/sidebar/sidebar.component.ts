@@ -4,7 +4,9 @@ import { CommonModule } from '@angular/common';
 import { GrouppostComponent } from '../grouppost/grouppost.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
 import { DataTransferService } from '../../services/data-transfer.service';
-import { SearchBarComponent } from "../search-bar/search-bar.component";``
+import { SearchBarComponent } from "../search-bar/search-bar.component";import { NewsfeedService } from '../../services/newsfeed.service';
+import { AuthService } from '@auth0/auth0-angular';
+``
 
 
 
@@ -30,9 +32,12 @@ export class SidebarComponent {
   isGroupModalVisible = false;
   pathname: string = window.location.pathname;
   pathMatch: RegExp = /^\/groupfeed(\/\d+)?$/;
+
+  userId: string = '';
+  members: string[] = [];
   isMember: boolean = false;
 
-  constructor(private dataTransferService: DataTransferService) {}
+  constructor(private dataTransferService: DataTransferService, private auth: AuthService, private newsFeedService: NewsfeedService) {}
 
   ngOnInit() {
     this.dataTransferService.currentData.subscribe(data => {
@@ -51,10 +56,31 @@ export class SidebarComponent {
     });
 
     this.dataTransferService.getMembersOfGroup(this.dataTransferService.getCurrentGroupId()).subscribe(members => {
-      this.isMember = members.includes(this.dataTransferService.getCurrentUserId());
-      console.log('Current user: ' + this.dataTransferService.getCurrentUserId());
+      this.members = members;
+      console.log('Group Members:', this.members);
     });
+
+    this.auth.user$.subscribe(user => {
+      if (user && user.email) {
+        this.newsFeedService.getUserByEmail(user.email).subscribe(
+          backendUser => {
+            this.userId = backendUser.userName;
+            if (this.userId) {
+          this.isMember = this.members.includes(this.userId);
+          console.log('User ID:', this.userId);
+          console.log('Member?', this.isMember);
+        }
+      },
+      error => {
+        console.error('Error fetching user from backend:', error);
+      }
+    );
+      
+      }
+    });
+    
   }
+    
 
   showModal() {
     //if statement to show group post modal

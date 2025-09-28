@@ -31,6 +31,8 @@ export class GroupFeedComponent implements OnInit {
   groupDescription: string = '';
   groupImgUrl: string = '';
   members: string[] = [];
+  memberName: string = '';
+  memberId: number = 0;
   dateCreated: Date = new Date();
   userId: string = '';
   isModalVisible = false;
@@ -54,17 +56,17 @@ export class GroupFeedComponent implements OnInit {
       const groupId = +params['id']; // Convert string to number
       if (groupId) {
         this.loadGroupById(groupId);
-        this.loadGroupMembers(groupId);
-        if (this.userId) {
-          this.isMember = this.members.includes(this.userId);
-        }
+        this.loadGroupMembers(groupId);        
       }
     });
     this.auth.user$.subscribe(user => {
       if (user && user.email) {
         this.newsFeedService.getUserByEmail(user.email).subscribe(
           backendUser => {
-            this.userId = backendUser.userName;                                   
+            this.userId = backendUser.userName;
+            if (this.userId) {
+          this.isMember = this.members.includes(this.userId);          
+        }                                   
           },
           error => {
             console.error('Error fetching user from backend:', error);
@@ -121,7 +123,8 @@ export class GroupFeedComponent implements OnInit {
   private loadGroupMembers(groupId: number) {
     this.dataTransferService.getMembersOfGroup(groupId).subscribe(
       data => {
-        this.members = data;        
+        this.members = [...new Set(data)];
+        this.checkMembershipStatus();       
       },
       error => {
         console.error('Error fetching group members:', error);
@@ -133,17 +136,76 @@ export class GroupFeedComponent implements OnInit {
     this.loadGroupById(selectedGroupId);
   }
 
-  joinGroup() {
-    this.dataTransferService.addMemberToGroup(this.groupId, 'currentUser').subscribe(
-      response => {
-        console.log('Successfully joined the group:', response);
-        
-      },
-      error => {
-        console.error('Error joining the group:', error);
-      }
-    );
+  private checkMembershipStatus() {
+  if (this.userId && this.members.length >= 0) {
+    this.isMember = this.members.includes(this.userId);
+    console.log('Membership status check - User:', this.userId, 'Is member:', this.isMember, 'Members:', this.members);
   }
+}
+
+  joinGroup() {
+    if (!this.isMember && this.userId) {
+
+      if (this.members.includes(this.userId)) {
+      console.log('User is already a member');
+      this.isMember = true;
+      return;
+    }
+      const newMember = {
+        groupId: this.groupId,
+        memberName: this.userId,        
+      };
+      this.dataTransferService.addMemberToGroup(newMember).subscribe({
+        next: (response) => {
+          console.log('Successfully joined the group:', response);
+
+          if (!this.members.includes(this.userId)) {
+            this.members.push(this.userId);
+          }
+          this.isMember = true;
+          this.loadGroupMembers(this.groupId);
+        
+        alert('Successfully joined the group!');
+        },
+        error: (error) => {
+          console.error('Error joining the group:', error);
+        }
+      });
+    } else if (this.isMember) {
+    
+    this.leaveGroup();
+  } else {
+    console.error('Cannot join group: User ID not available');
+    alert('Please log in to join the group.');
+  }
+
+
+  }
+
+  leaveGroup() {
+    if (this.isMember && this.userId) {
+      console.log('Leaving group:', this.groupId, 'User:', this.userId);
+            
+      this.dataTransferService.removeMemberFromGroup(this.groupId, this.userId).subscribe({
+        next: (response) => {
+          console.log('Successfully left the group:', response);
+          this.members = this.members.filter(member => member !== this.userId);
+          this.isMember = false;
+          this.loadGroupMembers(this.groupId);
+          alert('Successfully left the group!');
+        },
+        error: (error) => {
+          console.error('Error leaving the group:', error);
+          console.error('Error details:', error.error);
+          alert('Failed to leave the group. Please try again.');
+        }
+      });
+    }
+  }
+
+  
+
+      
 
   listGroupFeeds() {
     console.log('Loading group feeds for groupId:', this.groupId);
@@ -237,8 +299,7 @@ export class GroupFeedComponent implements OnInit {
     this.dataTransferService.changeData(data);
   }
 
-  deletePost(tempGroupFeed: any) {
-    //NewsFeedComponent.isEditMode = true;
+  deletePost(tempGroupFeed: any) {    
     const match = tempGroupFeed._links?.self?.href.match(/\/(\d+)$/);
     const postId = match ? parseInt(match[1], 10) : null;
     console.log(postId);
@@ -247,7 +308,7 @@ export class GroupFeedComponent implements OnInit {
           this.newsFeedService.deleteGroupPost(postId).subscribe(
             response => {
               console.log('Post deleted successfully:', response);
-              this.listGroupFeeds(); // Refresh the group feed after deletion
+              this.listGroupFeeds();
             },
             error => {
               console.error('Error deleting post:', error);
