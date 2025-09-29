@@ -1,14 +1,13 @@
 <div class="navbar" style="display: flex; justify-content: flex-end; border-bottom: solid 2px lightgray">
     <a id="logo"><img src="assets/IHeartWorld_Logo.png" alt="logo" id="logo-img"></a>
     <a class="nav-items" style="padding-right:2em"><img id= "home-icon" src="assets/home.svg" alt="Home Icon" routerLink="/home">Home</a>
-    <a class="nav-items" style="padding-right:2em"><img id="notifications-icon" src="assets/notifications.svg" alt="Notifications Icon">Notifications</a>
-    <a class="nav-items" style="padding-right:2em"><img id="messages-icon" src="assets/messages.svg" alt="Messages Icon">Messages</a>   
+    <a class="nav-items" style="padding-right:2em"><img id="notifications-icon" src="assets/notifications.svg" alt="Notifications Icon" routerLink="/notifications">Notifications</a>
+    <a class="nav-items" style="padding-right:2em"><img id="messages-icon" src="assets/messages.svg" alt="Messages Icon" *ngIf="isLoggedIn" routerLink="/messages">Messages</a>   
     <button (click)="Login()" id="login-button" *ngIf="!isLoggedIn">Login/Signup</button>
 
     <button matButton [matMenuTriggerFor]="menu" id="profile-button"><img id="profile-icon" src="assets/profile.svg" alt="Profile Icon">Profile</button>
     <mat-menu #menu="matMenu">
-        <button mat-menu-item><a routerLink="/profile">My Profile</a></button>
-        <button mat-menu-item><a routerLink="/account">Account</a></button>
+        <button mat-menu-item><a routerLink="/profile">My Profile</a></button>        
         <button mat-menu-item><a routerLink="/settings">Settings</a></button>
         <button mat-menu-item (click)="Logout()">Logout</button>
     </mat-menu>

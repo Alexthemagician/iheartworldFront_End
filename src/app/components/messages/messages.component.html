@@ -1,1 +1,28 @@
-<p>messages works!</p>
+<app-navigation></app-navigation>
+<app-sidebar></app-sidebar>
+
+<div class="message-heading">
+    <h1>Welcome to the Message Center!</h1>
+</div>
+<div class="messages-container">
+    <div class="message-box" *ngFor="let message of messages">
+        <h3>&#64;{{ message.userName }}</h3>
+        <p>{{ message.messageText }}</p>
+        <span class="timestamp">{{ timeElapsed(message.lastUpdated) }}</span>
+        <span class="edit-message" *ngIf="message.userName === userName && editingMessageId !== message.id" (click)="editMessage(message)">Edit</span>
+        <span class="delete-message" *ngIf="message.userName === userName && editingMessageId !== message.id" (click)="deleteMessage(message.id)">Delete</span>
+
+        <span class="editing-indicator" *ngIf="editingMessageId === message.id">Editing...</span>
+    </div>
+</div>
+<div class="message-form">
+    <input type="text" [(ngModel)]="messageText" [placeholder]="isEditMode ? 'Edit your message...' : 'Type your message here...'" />
+    <div class="button-group" *ngIf="!isEditMode">
+        <button (click)="sendMessage()"><img src="assets/send.svg"></button>
+    </div>
+    <div class="button-group" *ngIf="isEditMode">
+        <button (click)="sendMessage()">Save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+    </div>
+    
+</div>

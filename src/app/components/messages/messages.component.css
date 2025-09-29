@@ -1,0 +1,107 @@
+.message-heading {
+    text-align: center;
+    padding-top: 1em;
+    font-size: 1.5em;
+    font-weight: bold;
+    position: absolute;
+    left: 20em;
+    top: 0.8em;
+    color: #946ffa;
+    z-index: 1;
+}
+
+.message-form {
+    position: absolute;
+    top: 40em;
+    left: 40em;
+    right: 50%;    
+    width: auto;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;    
+    padding: 1em 8em;
+    background-image: linear-gradient(to bottom right, #f9f9f9, #e0e0e0);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.messages-container {
+    margin-top: 2em;
+    margin-bottom: 5em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    position: absolute;
+    top: 6em;
+    left: 20em;
+    width: 60%;
+    height: 30em;
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
+    overflow-y: auto;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.message-box {
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    background-color: #fff;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.edit-message {
+    position: relative;
+    bottom: 0em;
+    left: 43em;
+    width: 2em;
+    cursor: pointer;
+}
+
+.delete-message {
+    position: relative;
+    bottom: 0em;
+    left: 45em;
+    width: 2em;
+    cursor: pointer;
+}
+
+.editing-indicator {
+    color: #007bff;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+.cancel-btn:hover {
+    background-color: #c82333;
+}

@@ -75,6 +75,30 @@ deleteGroupPost(postId: number): Observable<any> {
 
 }
 
+//message methods
+
+sendMessage(newMessage: any): Observable<any> {
+  return this.httpClient.post<any>('http://localhost:8080/api/messages', newMessage);
+}
+
+getMessages(): Observable<any[]> {
+  return this.httpClient.get<any[]>('http://localhost:8080/api/messages');  
+}
+
+getMessageById(messageId: number): Observable<any> {
+  return this.httpClient.get<any>(`http://localhost:8080/api/messages/${messageId}`);
+}
+
+updateMessage(id: number, updatedMessage: any): Observable<any> {
+  return this.httpClient.put<any>(`http://localhost:8080/api/messages/${id}`, updatedMessage);
+}
+
+deleteMessage(messageId: number): Observable<any> {
+  return this.httpClient.delete<any>(`http://localhost:8080/api/messages/${messageId}`);
+}
+
+//message methods end
+
 }
 
 interface GetResponse {
