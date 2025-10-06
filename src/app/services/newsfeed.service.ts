@@ -99,6 +99,21 @@ deleteMessage(messageId: number): Observable<any> {
 
 //message methods end
 
+//notifications methods
+
+getNotifications(): Observable<any[]> {
+  return this.httpClient.get<any[]>('http://localhost:8080/api/notifications');  
+}
+
+getNotificationsById(id: number): Observable<any> {
+  return this.httpClient.get<any>(`http://localhost:8080/api/notifications/${id}`);
+}
+
+postNotification(newNotification: any): Observable<any> {
+  return this.httpClient.post<any>('http://localhost:8080/api/notifications', newNotification);
+}
+
+
 }
 
 interface GetResponse {

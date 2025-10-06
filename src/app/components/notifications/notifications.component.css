@@ -1,0 +1,29 @@
+.notifications-heading {
+    text-align: center;
+    padding-top: 1em;
+    font-size: 1.5em;
+    font-weight: bold;
+    position: absolute;
+    left: 30em;
+    top: 0.8em;
+    color: #946ffa;
+    z-index: 1;
+}
+
+.notification-list {
+    margin-top: 2em;
+    margin-bottom: 5em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    position: absolute;
+    top: 6em;
+    left: 30em;
+    width: 40%;
+    height: 30em;
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
+    overflow-y: auto;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}

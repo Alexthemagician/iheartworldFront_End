@@ -51,10 +51,8 @@ export class DataTransferService {
 
   removeMemberFromGroup(groupId: number, memberIdentifier: string | number): Observable<any> {
     if (typeof memberIdentifier === 'string') {
-      // ✅ Delete by member name using query parameters
       return this.httpClient.delete(`${this.groupMembersUrl}?groupId=${groupId}&memberName=${encodeURIComponent(memberIdentifier)}`);
     } else {
-      // ✅ Delete by member ID using path parameters
       return this.httpClient.delete(`${this.groupMembersUrl}/group/${groupId}/member/${memberIdentifier}`);
     }
   }

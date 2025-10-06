@@ -31,6 +31,7 @@ export class ProfileComponent extends NewpostComponent {
   override editedImgUrl: string = '';
   editedAbout: string = '';
   id: number = 0;
+  
 
   override myWidget: any;
   override cloudname = "dpevuiym0";
@@ -81,6 +82,8 @@ export class ProfileComponent extends NewpostComponent {
           if (user && user.email) {
             this.userEmail = user.email;
             this.email = user.email;
+            
+            
                      
 
             this.checkUserExists(user.email);

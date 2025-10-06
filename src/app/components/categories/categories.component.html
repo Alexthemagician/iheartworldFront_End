@@ -1,1 +1,56 @@
-<p>categories works!</p>
+<div><app-navigation></app-navigation></div>
+<div><app-sidebar></app-sidebar></div>
+
+<div class="categories-heading">
+    <h2>Categories</h2>
+</div>
+<div class="categories-links">
+    <button class="category-button" (click)="searchCategory(category1)">{{ category1 }}</button>
+    <button class="category-button" (click)="searchCategory(category2)">{{ category2 }}</button>
+    <button class="category-button" (click)="searchCategory(category3)">{{ category3 }}</button>
+    <button class="category-button" (click)="searchCategory(category4)">{{ category4 }}</button>
+</div>
+<div class="categories-results" *ngIf="results.length > 0">
+    <table class="table table-borderless" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 10em ">
+    <ng-container *ngFor="let tempNewsFeed of results">
+      <thead>
+        <tr>
+          <th id="user_name">&#64;{{ tempNewsFeed.userId }}</th>
+        </tr>
+      </thead>
+      <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <tr>
+          <td>{{ tempNewsFeed.postCategory }}</td>
+        </tr>
+        <tr>
+          <td>{{ tempNewsFeed.postTitle }}</td>
+        </tr>
+        <tr>
+          <td>{{ tempNewsFeed.postText }}</td>
+        </tr>
+        <tr>
+          <td>
+            <ng-container *ngIf="tempNewsFeed.postImgUrl !== null && tempNewsFeed.postImgUrl !== ''">
+              <img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:25em; width: 50em; object-fit: cover;">
+            </ng-container>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <ng-container *ngIf="tempNewsFeed.postVideoUrl !== null && tempNewsFeed.postVideoUrl !== ''">
+              <video style="max-width: 50em;" src="{{ tempNewsFeed.postVideoUrl }}" controls></video>
+            </ng-container>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ tempNewsFeed.dateCreated | date }}</td>
+        </tr>        
+        <tr>
+          <td id="bottom"><br></td>
+        </tr>
+      </tbody>
+    </ng-container>
+  </table>
+</div>
+
+

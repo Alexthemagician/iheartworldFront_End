@@ -7,6 +7,7 @@ import { User } from '../../common/user';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
   selector: 'app-messages',
@@ -25,10 +26,11 @@ export class MessagesComponent {
   isEditMode: boolean = false;
   editingMessageId: number = 0;
   originalMessageText: string = '';
+  messageNotification: string = '';
 
   messages: any[] = [];
 
-  constructor(private auth: AuthService, private newsFeedService: NewsfeedService) {}
+  constructor(private auth: AuthService, private newsFeedService: NewsfeedService, private dataTransferService: DataTransferService) {}
 
   ngOnInit() {
     this.auth.user$.subscribe(user => {
@@ -44,9 +46,10 @@ export class MessagesComponent {
           }
         );
       }
-    });
-
+    });    
+    
     this.loadMessages();
+    
   }
 
   sendMessage() {
@@ -164,4 +167,6 @@ export class MessagesComponent {
       return `${hours} hours ago`;
     }
   }
-  }
+
+  
+}

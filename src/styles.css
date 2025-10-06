@@ -227,6 +227,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     position: absolute;
     top:0;
     right: 90em;
+    cursor: pointer;
 
 }
 
@@ -280,7 +281,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .nav-items {
     padding-top: 2em;
-    cursor: pointer;
+    cursor: pointer;    
 }
 
 #login-button:hover, #profile-button:hover {
@@ -392,5 +393,41 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-right: auto;
 }
 
+.categories-heading {
+    text-align: center;
+    position: absolute;
+    top: 4.8em;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2em;
+    color: #222a42;
+    background-color: rgba(193, 225, 247, 0.5);
+    padding: 0 1em;
+    font-size: large;    
+    border-radius: 1em;
+    border: solid 1px rgba(148, 122, 250, 0.5);
+}
 
+.categories-links {
+    list-style-type: none;
+    padding-left: 0;
+    position: absolute;
+    top: 11em;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2em;   
+}
 
+.categories-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    margin-top: 2em;
+    position: relative;
+    left: 20%;
+    max-width: 80%;
+    bottom: 105em;
+    
+    
+}

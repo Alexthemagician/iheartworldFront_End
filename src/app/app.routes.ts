@@ -6,6 +6,8 @@ import { GroupFeedComponent } from './components/group-feed/group-feed.component
 import { ProfileComponent } from './components/profile/profile.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+
 
 export const routes: Routes = [
     { path: '', component: ProfileComponent },        
@@ -14,8 +16,10 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'messages', component: MessagesComponent },
     { path: 'notifications', component: NotificationsComponent },
+    { path: 'categories', component: CategoriesComponent },
     { path: 'settings', loadComponent: () => import('./components/settings/settings.component').then(m => m.SettingsComponent) },
     { path: 'profile', loadComponent: () => import('./components/profile/profile.component').then(m => m.ProfileComponent) },
+    { path: 'profile/:userId', loadComponent: () => import('./components/profile/profile.component').then(m => m.ProfileComponent) },
     //{ path: 'Saved', component: SavedComponent },
     //{ path: 'Favorites', component: FavoritesComponent },
     //{ path: '', redirectTo: '/home', pathMatch: 'full' }

@@ -5,7 +5,7 @@
 <table class="table table-borderless" *ngFor="let tempNewsFeed of newsFeeds" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 10em ">
     <thead>
         <tr>
-            <th id="user_name">&#64;{{ tempNewsFeed.userId }}</th>
+            <a href="/profile/{{ tempNewsFeed.userId }}"><th id="user_name">&#64;{{ tempNewsFeed.userId }}</th></a>
             <button matButton [matMenuTriggerFor]="menu" id="postMenu"><img src="assets/menu.svg" alt="Menu"></button>
             <mat-menu #menu="matMenu">                        
                 <button mat-menu-item *ngIf="userIdMatch(tempNewsFeed)" (click)="showModal()" (click)="editPost(tempNewsFeed)">Edit</button>
@@ -33,10 +33,6 @@
         <tr>
             <td>{{ tempNewsFeed.dateCreated | date }}</td>
         </tr>        
-        <tr>
-            <td style="position: relative; left: 25em; bottom: 1em"><input type="image" src="assets/heart_icon_black.svg" style="width: 5em; height: 5em;">Like</td>
-            
-        </tr> 
         <tr>
             <td id="bottom"><br></td>
         </tr>      

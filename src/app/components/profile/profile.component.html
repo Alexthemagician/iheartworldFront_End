@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-group">
-    <label for="password">Password:</label>
+    <label for="password">Re-Enter Password:</label>
     <input type="password" id="password" name="password" [required]="isNewUser" [readonly]="!isNewUser" [class.readonly]="!isNewUser" [(ngModel)]="userPassword" #passwordInput="ngModel" minlength="8"/>
 
     <div *ngIf="passwordInput.invalid && passwordInput.touched && isNewUser" class="error-message">
