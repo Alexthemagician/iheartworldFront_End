@@ -37,6 +37,7 @@ export class SidebarComponent {
   userId: string = '';
   members: string[] = [];
   isMember: boolean = false;
+  isGroupPost: boolean = false;
 
   constructor(private dataTransferService: DataTransferService, private auth: AuthService, private newsFeedService: NewsfeedService) {}
 
@@ -52,6 +53,9 @@ export class SidebarComponent {
         this.editedDateCreated = this.receivedData.editedDateCreated;
         if (this.isEditMode) {
           this.postText = this.editedText;          
+        }
+        if (this.pathname.match(this.pathMatch)) {
+          this.isGroupPost = true;
         }
       }
     });
@@ -85,8 +89,9 @@ export class SidebarComponent {
 
   showModal() {
     //if statement to show group post modal
-    if (this.pathname.match(this.pathMatch)) {
+    if (this.pathname.match(this.pathMatch)) {      
       this.isGroupModalVisible = true;
+      
     }
     else {
       this.isModalVisible = true;

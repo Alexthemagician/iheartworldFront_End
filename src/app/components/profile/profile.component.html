@@ -8,17 +8,18 @@
         
         <div class="profile-info-readonly">
             <div class="info-item">
-                <label>Username:</label>
+                <label>Username: </label>
                 <span>{{ userName }}</span>
             </div>
+            <br>
             
             <div class="info-item">
-                <label>About:</label>
+                <label>About me:</label>
                 <p>{{ about || 'No information provided.' }}</p>
             </div>
         </div>
         <div class="readonly-notice">
-            <p><em>You are viewing {{ userName }}'s profile in read-only mode.</em></p>
+            <p><em>You are viewing {{ userName }}'s profile.</em></p>
         </div>
     </div>
     <div *ngIf="!isLoading && !isViewingOtherUser">
