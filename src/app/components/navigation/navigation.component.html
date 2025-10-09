@@ -1,7 +1,6 @@
 <div class="navbar" style="display: flex; justify-content: flex-end; border-bottom: solid 2px lightgray">
     <a id="logo"><img src="assets/IHeartWorld_Logo.png" alt="logo" id="logo-img" routerLink="/home"></a>
-    <a routerLink="/home" class="nav-items" style="padding-right:2em"><img id= "home-icon" src="assets/home.svg" alt="Home Icon" routerLink="/home">Home</a>
-    <a *ngIf="isLoggedIn" class="nav-items" style="padding-right:2em"><img id="notifications-icon" src="assets/notifications.svg" alt="Notifications Icon" *ngIf="isLoggedIn" routerLink="/notifications">Notifications</a>
+    <a routerLink="/home" class="nav-items" style="padding-right:2em"><img id= "home-icon" src="assets/home.svg" alt="Home Icon" routerLink="/home">Home</a>    
     <a *ngIf="isLoggedIn" class="nav-items" style="padding-right:2em"><img id="messages-icon" src="assets/messages.svg" alt="Messages Icon" *ngIf="isLoggedIn" routerLink="/messages">Messages</a>   
     <button (click)="Login()" id="login-button" *ngIf="!isLoggedIn">Login/Signup</button>
 

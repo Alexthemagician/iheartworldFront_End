@@ -10,7 +10,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { AuthService } from '@auth0/auth0-angular';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -49,7 +49,7 @@ export class NewsFeedComponent {
   editedVideoUrl: string = '';
   editedDateCreated: Date = new Date();
 
-  constructor(private newsFeedService: NewsfeedService, private auth: AuthService, private dataTransferService: DataTransferService) {}
+  constructor(private newsFeedService: NewsfeedService, private auth: AuthService, private dataTransferService: DataTransferService, private router: Router) {}
 
   ngOnInit(): void {
     this.listNewsFeeds();    
@@ -165,7 +165,10 @@ export class NewsFeedComponent {
       
 
   }
-  
+
+  navigateToProfile(userName: string) {
+    this.router.navigate(['/profile', userName]);
+  }
 
 }
 

@@ -8,6 +8,7 @@ import { NavigationComponent } from '../navigation/navigation.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -38,7 +39,16 @@ export class ProfileComponent extends NewpostComponent {
   override uploadPreset = "ml_default";
   override uploadResult: boolean = false;
 
-  
+  isViewingOtherUser: boolean = false;
+  viewingUserName: string = '';
+  currentUserName: string = '';
+
+  constructor(private route: ActivatedRoute, protected override auth: AuthService,
+    protected override newpostService: NewpostService,
+    protected override newsFeedService: NewsfeedService,
+    protected override dataTransferService: DataTransferService) {
+    super(newpostService, auth, newsFeedService, dataTransferService);
+  }
 
   override ngOnInit() {
     this.myWidget = (window as any).cloudinary.createUploadWidget(
@@ -65,16 +75,29 @@ export class ProfileComponent extends NewpostComponent {
         if (profileImage) {
           profileImage.src = result.info.secure_url;
         }
-        
-        // ✅ Remove post-specific image/video handling since this is for profiles
+                
       }
       if (error) {
         console.error('Profile upload error:', error);
       }
     }
   );
-    
 
+  this.route.params.subscribe(params => {
+    const routeUserName = params['userName'];
+    if (routeUserName) {
+      this.isViewingOtherUser = true;
+      this.viewingUserName = routeUserName;
+      this.loadOtherUserProfile(routeUserName);
+    } else {
+      this.isViewingOtherUser = false;
+      this.loadMyProfile();
+    }
+  });   
+    
+  }
+
+  loadMyProfile() {
     this.auth.isAuthenticated$.subscribe((authenticated) => {
       this.isLoggedIn = authenticated;
       if (authenticated) {
@@ -82,32 +105,63 @@ export class ProfileComponent extends NewpostComponent {
           if (user && user.email) {
             this.userEmail = user.email;
             this.email = user.email;
-            
-            
-                     
-
             this.checkUserExists(user.email);
-            /* this.emailExists = true;
-            this.newsFeedService.getUserByEmail(user.email).subscribe(
-              backendUser => {
-                this.userName = backendUser.userName;
-                this.profileImgUrl = backendUser.profileImgUrl;
-                this.about = backendUser.about;
-                this.userPassword = backendUser.userPassword;
-                this.email = backendUser.email;
-              }); */
           }
         });
+      } else {
+        this.isLoading = false;
+      }
+    });
+  }
+
+  loadOtherUserProfile(username: string) {
+    console.log('Loading other user profile for:', username);
+    this.isLoading = true;
+    this.newsFeedService.getUserByUserName(username).subscribe(
+      backendUser => {
+        console.log('Loaded other user profile:', backendUser);
+        if (backendUser) {
+        this.userName = backendUser.userName;
+        this.profileImgUrl = backendUser.profileImgUrl;
+        this.about = backendUser.about;
+        this.email = backendUser.email;
+        this.id = backendUser.id;
+        this.isLoading = false;
+        this.isNewUser = false;
+        this.emailExists = true;
+        console.log('Loaded profile:', backendUser);
+        this.getCurrentUserInfo();
+      } else {
+        console.error('User not found');
+        this.isLoading = false;
+      }
+      }
+    );
+  }
+
+  getCurrentUserInfo() {
+    this.auth.user$.subscribe(user => {
+      if (user && user.email) {
+        this.newsFeedService.getUserByEmail(user.email).subscribe(
+          currentUser => {
+            this.currentUserName = currentUser.userName;
+            this.isLoggedIn = true;
+          },
+          (error) => {
+            console.error('Error fetching current user info:', error);
+          }
+        );
       }
     });
   }
 
   checkUserExists(email: string) {
-    this.newsFeedService.getUserByEmail(this.userEmail).subscribe(
+    this.newsFeedService.getUserByEmail(email).subscribe(
       backendUser => {
         this.isNewUser = false;
         this.emailExists = true;
         this.userName = backendUser.userName;
+        this.currentUserName = backendUser.userName;
         this.profileImgUrl = backendUser.profileImgUrl;
         this.about = backendUser.about;
         this.userPassword = backendUser.userPassword;
@@ -130,6 +184,11 @@ export class ProfileComponent extends NewpostComponent {
   }
 
   override onSubmit(form: any) {
+    if (this.isViewingOtherUser) {
+      alert('You cannot edit another user\'s profile.');
+      return;
+    }
+
     if (form.valid) {
       this.updateProfile();
     } else {
@@ -141,56 +200,52 @@ export class ProfileComponent extends NewpostComponent {
   }
 
     updateProfile() {
-      if (this.isLoggedIn) {
-        const user = {
+       if (this.isViewingOtherUser) {
+      alert('You cannot edit another user\'s profile.');
+      return;
+    }
+
+    if (this.isLoggedIn) {
+      const user = {
+        userName: this.userName,
+        email: this.userEmail,
+        about: this.about,
+        profileImgUrl: this.profileImgUrl,
+        userPassword: this.userPassword
+      };
+      if (this.isNewUser) {
+        this.newsFeedService.postToUsers(user).subscribe((response) => {
+          console.log('Profile created successfully:', response);
+          alert('Profile created successfully!');
+          this.isNewUser = false;
+        }, error => {
+          console.error('Error creating profile:', error);
+          alert('Error creating profile. Please try again.');
+        });
+      } else {
+        const updatedData = {
+          id: this.id,
           userName: this.userName,
           email: this.userEmail,
           about: this.about,
           profileImgUrl: this.profileImgUrl,
           userPassword: this.userPassword
         };
-        if (this.isNewUser) {
-          this.newsFeedService.postToUsers(user).subscribe((response) => {
-            console.log('Profile created successfully:', response);
-            alert('Profile created successfully!');
-            this.isNewUser = false;
-          }, error => {
-            console.error('Error creating profile:', error);
-            alert('Error creating profile. Please try again.');
-          }
-          );
-        } else {
-          const updatedData = {
-            id: this.id,
-            userName: this.userName,
-            email: this.userEmail,
-            about: this.about,
-            profileImgUrl: this.profileImgUrl,
-            userPassword: this.userPassword
-          };
-          this.newsFeedService.updateUser(updatedData).subscribe((response) => {
-            console.log('Profile updated successfully:', response);
-            alert('Profile updated successfully!');
-          }, (error: any) => {
-            console.error('Error updating profile:', error);
-            alert('Error updating profile. Please try again.');
-          });
-        }
+        this.newsFeedService.updateUser(updatedData).subscribe((response) => {
+          console.log('Profile updated successfully:', response);
+          alert('Profile updated successfully!');
+        }, (error: any) => {
+          console.error('Error updating profile:', error);
+          alert('Error updating profile. Please try again.');
+        });
       }
+    }
     }
 
     cancelUpdate() {
+      if (!this.isViewingOtherUser) {
       this.checkUserExists(this.userEmail);
-      /* if (this.emailExists) {
-        this.newsFeedService.getUserByEmail(this.userEmail).subscribe(
-          backendUser => {
-            this.userName = backendUser.userName;
-            this.profileImgUrl = backendUser.profileImgUrl;
-            this.about = backendUser.about;
-            this.userPassword = backendUser.userPassword;
-          }
-        );
-      } */
+    }
     }
   }
 

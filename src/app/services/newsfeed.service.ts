@@ -41,6 +41,10 @@ export class NewsfeedService {
   return this.httpClient.get<any>(`http://localhost:8080/api/user/by-email?email=${encodeURIComponent(email)}`);
 }
 
+getUserByUserName(userName: string): Observable<any> {
+  return this.httpClient.get<any>(`http://localhost:8080/api/user/by-userName?userName=${encodeURIComponent(userName)}`);
+}
+
 getUsers(): Observable<User[]> {
   return this.httpClient.get<GetResponse>('http://localhost:8080/api/user').pipe(
     map(response => response._embedded?.users)

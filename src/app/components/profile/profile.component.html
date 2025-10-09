@@ -2,8 +2,26 @@
 <app-sidebar style="position: relative;"></app-sidebar>
 <div class="profile-container">
     <div *ngIf="isLoading" class="loading-message">Loading profile information...</div>
-    <img *ngIf="!isLoading" src="{{ profileImgUrl }}" alt="Profile Picture" class="profile-picture-preview"/>
-    <div *ngIf="!isLoading">
+    <img *ngIf="!isLoading && profileImgUrl" src="{{ profileImgUrl }}" alt="Profile Picture" class="profile-picture-preview"/>
+    <div *ngIf="!isLoading && isViewingOtherUser" class="other-user-profile">
+        <h1>{{ userName }}'s Profile</h1>
+        
+        <div class="profile-info-readonly">
+            <div class="info-item">
+                <label>Username:</label>
+                <span>{{ userName }}</span>
+            </div>
+            
+            <div class="info-item">
+                <label>About:</label>
+                <p>{{ about || 'No information provided.' }}</p>
+            </div>
+        </div>
+        <div class="readonly-notice">
+            <p><em>You are viewing {{ userName }}'s profile in read-only mode.</em></p>
+        </div>
+    </div>
+    <div *ngIf="!isLoading && !isViewingOtherUser">
         <h1>{{ isNewUser ? 'Complete Your Profile' : 'Update Profile' }}</h1>
   <form #profileForm="ngForm" (ngSubmit)="onSubmit(profileForm)">
     <div class="form-group">
