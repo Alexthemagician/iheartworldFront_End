@@ -1,1 +1,14 @@
-<p>settings works!</p>
+<app-navigation></app-navigation>
+<app-sidebar></app-sidebar>
+
+<div class="settings-container">
+<h1 class="settings-title">Settings</h1>
+
+<div class="settings-section">
+<h2 class="settings-subtitle">Appearance</h2>
+
+<div class="theme-setting">
+    <p class="setting-description">Current Theme: <strong>{{ currentTheme === 'dark' ? 'Dark Mode' : 'Light Mode' }}</strong></p>
+    <button type="button" (click)="toggleTheme()" [attr.aria-label]="getThemeButtonLabel()">{{ getThemeButtonLabel() }}</button>
+</div>
+</div>

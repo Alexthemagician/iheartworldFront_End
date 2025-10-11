@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLinkActive, RouterLink } from '@angular/router';
 import { NewsFeedComponent } from "./components/news-feed/news-feed.component";
 import { NavigationComponent } from "./components/navigation/navigation.component";
@@ -9,6 +9,7 @@ import { AuthService, AuthModule } from '@auth0/auth0-angular';
 import { HomeComponent } from "./components/home/home.component";
 import { LoginStatusComponent } from './components/login-status/login-status.component';
 import { CommonModule } from '@angular/common';
+import { ThemeService } from './services/theme.service';
 
 
 
@@ -25,7 +26,7 @@ declare const cloudinary: any;
 })
 
 
-export class AppComponent {
+export class AppComponent implements OnInit{
 [x: string]: any;
 
 
@@ -35,11 +36,14 @@ export class AppComponent {
   
   
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private themeService: ThemeService) {
     this.auth.isAuthenticated$.subscribe((authenticated) => {
       this.isLoggedIn = authenticated;
     });  
   }
 
-  
+  ngOnInit() {
+    console.log('Initialized theme:', this.themeService.getCurrentTheme());  
+  }
+
 }
