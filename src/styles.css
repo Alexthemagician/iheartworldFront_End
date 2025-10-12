@@ -7,6 +7,9 @@
     --input-bg-color: #f5f5f5;
     --input-text-color: #000000;
     --border-color: #cccccc;
+    --border-color2: #dddddd;
+    --container-bg-color: #f9f9f9;
+    --textarea-bg-color: #ffffff;
 }
 
 [data-theme="dark"] {
@@ -18,6 +21,11 @@
     --input-bg-color: #1e1e1e;
     --input-text-color: #ffffff;
     --border-color: #444444;
+    --border-color2: #555555;
+    --container-bg-color: #292b4f;
+    --textarea-bg-color: #2c2c2c;
+    --body-bg-color-light: #232a36;
+    --body-bg-color-dark: #060d20;
 }
 
 .settings-container {
@@ -103,8 +111,7 @@ html, body { height: 100%; }
 body { 
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    
 }
 
 #bootstrap_override {
@@ -123,12 +130,60 @@ body {
     
 }
 
+/* .news-feed-title {
+    text-align: center;
+    position: absolute;
+    top: 2.5em;
+    left: 50%;
+    transform: translateX(-50%);    
+    color: #222a42;
+    background-color: rgba(193, 225, 247, 0.5);
+    font-size: small;
+    padding: 0.1em 1em;
+    border-radius: 0.5em;
+    border: solid 1px var(--body-bg-color-light);
+} */
+
+
 #search-icon {
     position: relative;
     right: 1em;
     bottom: 1.5em;
     width: 1em;
     height: 1em;
+}
+
+.search-bar {
+    position: absolute;
+    top: 3em;
+    left: -16em;
+    max-height: 4em;    
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    flex-direction: column;     
+}
+
+.sidebar-menu {
+    padding-top: 4em;
+    cursor: pointer;
+    
+     
+}
+
+.news-feed-body {
+    position: relative;    
+    top: 2em;
+    right: 8%;
+    width: auto;
+    padding-left: 2em;
+    padding-top: 1em;
+    padding: 1em;
+    background-color: var(--body-bg-color-dark);
+    border-left: solid 2px var(--body-bg-color-light);
+    border-top: solid 2px var(--body-bg-color-light);    
+    
 }
 
 #postMenu {
@@ -290,15 +345,15 @@ body {
 
 
 #logo-img {
-    width: 4em;
-    height: 4em;
-    max-width: 4em;
-    max-height: 4em;
+    width: 6em;
+    height: 6em;
+    max-width: 6em;
+    max-height: 6em;
     object-fit: contain;
     display: block;
     position: absolute;
     top:0;
-    right: 90em;
+    right: 88em;
     cursor: pointer;
 
 }
@@ -357,14 +412,31 @@ body {
 .side-bar {
     padding: 1em;
     text-align: left;
-    border-bottom: solid 1px lightgray;
+    border-bottom: solid 1px var(--body-bg-color-light);
     cursor: pointer;
 }
 
 .sidebar {
-    border-right: solid 2px lightgray;
+    border-right: solid 2px var(--body-bg-color-light);
     height: 100%;
     padding-bottom: 100%;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    background-color: var(--body-bg-color-dark);
+    max-width: 20%; 
+    display: flex; 
+    justify-content: flex-start; 
+    flex-direction: column;    
+}
+
+.navbar {
+    display: flex; 
+    justify-content: 
+    flex-end; 
+    border-bottom: solid 2px var(--body-bg-color-light);
+    background-color: var(--body-bg-color-light);
+    height: 5em;
 }
 
 #create-post {
@@ -506,11 +578,14 @@ body {
     border-radius: 0.5em; 
     border-color:aqua;
     align-items: center;
+    background-color: var(--textarea-bg-color);
+    color: var(--text-color);
 }
 
 .radio {
     display: inline-block;
     margin: 0.5em 0;
+    color: var (--text-color);
 }
 
 .error-message {
@@ -539,6 +614,10 @@ body {
 
 .category-section {
     margin-bottom: 1em;
+    background-color: var(--container-bg-color);
+    border: 1px solid var(--border-color2);
+    border-radius: 0.5em;
+    padding: 1em;
 }
 
 .ng-valid.ng-touched {
@@ -666,7 +745,7 @@ body {
 }
 
 .modal-content {    
-    background-color: #fff;
+    background-color: var(--container-bg-color);
     padding: 6em;
     border-radius: 10px;
     text-align: center;

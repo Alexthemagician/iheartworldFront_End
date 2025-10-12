@@ -152,16 +152,14 @@ export abstract class Basepostcomponent implements OnInit {
   }
 
     protected isVideo(url: string | null | undefined) {
-        return url?.includes('video') ?? false; //checking if the url contains 'video'
+        return url?.includes('video') ?? false;
     }
 
     postNewPost() { 
         if (this.isVideo(this.postImgUrl)) {
             this.postVideoUrl = this.postImgUrl;
             this.postImgUrl = '';
-        }
-
-        console.log('Basepostcomponent - groupId value:', this.groupId); // Debug log
+        }        
 
         const baseData: PostData = {
         postText: this.postText,
@@ -173,9 +171,7 @@ export abstract class Basepostcomponent implements OnInit {
         dateCreated: this.isEditMode ? this.editedDateCreated : new Date(),
         postId: this.isEditMode ? this.editedPostId : undefined,
         groupId: this.groupId
-    };
-
-        console.log('Basepostcomponent - final postData:', baseData); // Debug log
+    };     
 
 
     const op$ = this.isEditMode ? this.update(baseData) : this.create(baseData);

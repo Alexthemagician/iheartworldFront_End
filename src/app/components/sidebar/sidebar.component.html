@@ -1,8 +1,8 @@
-<div class="sidebar" style="max-width: 20%; display: flex; justify-content: flex-start; flex-direction: column;">
+<div class="sidebar" style="max-width: 20%; display: flex; justify-content: flex-start; flex-direction: column; padding-top: 4em;">
     
   
-    <a class="side-bar" routerLink="/categories"><img id="category-icon" src="assets/category.svg" alt="Category Icon">Categories</a>
-    <a class="side-bar" routerLink="/groups"><img id="groups-icon" src="assets/groups.svg" alt="Groups Icon">Groups</a>        
+    <a class="side-bar" routerLink="/categories" style="text-decoration: none"><img id="category-icon" src="assets/category.svg" alt="Category Icon">Categories</a>
+    <a class="side-bar" routerLink="/groups" style="text-decoration: none"><img id="groups-icon" src="assets/groups.svg" alt="Groups Icon">Groups</a>
     <button id="create-post" class="side-bar" (click)="showModal()" [disabled]=" isGroupPost && !isMember">Create Post</button>
     <app-newpost *ngIf="isModalVisible" (close)="hideModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-newpost>
     <app-grouppost *ngIf="isGroupModalVisible" (close)="hideGroupModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-grouppost>

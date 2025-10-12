@@ -1,8 +1,9 @@
-<h1 class="mt-3 mb-3" id="bootstrap_override2"style="text-align: center; ">News Feed</h1>
+<!-- <div class="news-feed-title"><h1 class="mt-3 mb-3" id="bootstrap_override2"style="text-align: center; ">News Feed</h1></div> -->
 <app-newpost *ngIf="isModalVisible" (close)="hideModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%">   
 </app-newpost>
-<app-search-bar></app-search-bar>
-<table class="table table-borderless" *ngFor="let tempNewsFeed of newsFeeds" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 10em ">
+<div class="news-feed-search-bar"><app-search-bar></app-search-bar></div>
+<div class="news-feed-body">
+<table class="table table-borderless" *ngFor="let tempNewsFeed of newsFeeds" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
     <thead>
         <tr>
             <th id="user_name" (click)="navigateToProfile(tempNewsFeed.userId)" style="cursor: pointer;">
@@ -40,6 +41,7 @@
         </tr>      
     </tbody>
 </table>
+</div>
 
 
 
