@@ -1,17 +1,17 @@
-<mat-form-field class="search-bar">
-  <input matInput #searchInput (keyup)="search(searchInput.value)" placeholder="Search">
+<div class="search-bar">
+  <input class="search-input" #searchInput (keyup)="search(searchInput.value)" placeholder="Search">
   <img id="search-icon" src="assets/search.svg" alt="Search Icon">
-  <button mat-button *ngIf="query" (click)="clearSearch()">Clear</button>
-</mat-form-field>
-<ng-container *ngIf="results.length > 0">
-  <table class="table table-borderless" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 10em ">
+  <button *ngIf="query" (click)="clearSearch()">Clear</button>
+</div>
+<div class="search-results" *ngIf="results.length > 0">
+  <table class="table table-borderless" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2em; width: 40em;">
     <ng-container *ngFor="let tempNewsFeed of results">
       <thead>
         <tr>
-          <th id="user_name">&#64;{{ tempNewsFeed.userId }}</th>
+          <th (click)="navigateToProfile(tempNewsFeed.userId)" style="position: relative; left: 0; cursor: pointer;" id="user_name">&#64;{{ tempNewsFeed.userId }}</th>
         </tr>
       </thead>
-      <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center; max-width: 40em;">
         <tr>
           <td>{{ tempNewsFeed.postCategory }}</td>
         </tr>
@@ -24,7 +24,7 @@
         <tr>
           <td>
             <ng-container *ngIf="tempNewsFeed.postImgUrl !== null && tempNewsFeed.postImgUrl !== ''">
-              <img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:25em; width: 50em; object-fit: cover;">
+              <img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height: 15em; width: 30em; object-fit: cover; border-radius: 2em;">
             </ng-container>
           </td>
         </tr>
@@ -44,7 +44,7 @@
       </tbody>
     </ng-container>
   </table>
-</ng-container>
+</div>
 <ng-container *ngIf="results.length === 0 && query">
   <p style="text-align: center;">No results found.</p>
   <h1 style="text-align: center;">:(</h1>
