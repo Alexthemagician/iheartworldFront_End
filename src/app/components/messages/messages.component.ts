@@ -156,6 +156,10 @@ export class MessagesComponent {
     const date = new Date(dateString);
     const now = new Date();
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    const days = Math.floor(seconds / 86400);
+    if (days > 0) {
+      return `${days} days ago`;
+    }
 
     if (seconds < 60) {
       return `${seconds} seconds ago`;

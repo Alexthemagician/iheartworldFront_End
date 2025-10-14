@@ -15,6 +15,8 @@
     --body-bg-color-dark: #c0c0c0;
     --body-bg-color-mid: #d0d0d0;
     --icon-filter: none;
+    --box-shadow-color: #6053a6;
+    --body-search-bg-color: #a7bce9;
 }
 
 [data-theme="dark"] {
@@ -34,10 +36,17 @@
     --body-bg-color-dark: #060d20;
     --body-bg-color-mid: #1c222c;
     --icon-filter: hue-rotate(-10deg) saturate(1) grayscale(60%);
+    --box-shadow-color: #372f66;
+    --body-search-bg-color: #292b4f;
 }
 
 a {
     color: var(--text-color);
+}
+
+li a {
+    color: var(--text-color);
+    text-decoration: none;
 }
 
 .settings-container {
@@ -166,6 +175,16 @@ body {
     
 }
 
+#search-override  {
+    display: flex;
+    border: solid 2px var(--body-bg-color-white);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--body-search-bg-color);
+    color: var(--text-color);    
+}
+
 #bootstrap_override {
     background-color: var(--body-bg-color-mid); 
     padding-top: 1em; 
@@ -182,13 +201,14 @@ body {
     width: 70em;
     margin-left: 5.5em;
     height: 20em;
-    margin-bottom: 2em;
+    margin-bottom: 3em;
+    margin-top: 1em;
 }
 
 
 
 #bootstrap_override:hover {
-    background-color: rgba(222, 214, 253, 0.8);
+    box-shadow: 0.1px 6px 22px 12px var(--box-shadow-color);
     
 }
 
@@ -233,6 +253,7 @@ body {
     max-height: 80vh;
     overflow-y: auto;
     border-radius: 2em;
+    
 }
 
 .sidebar-menu {
@@ -921,6 +942,7 @@ body {
 .cancel-btn:hover {
     background-color: #c82333;
 }
+
 
 .modal-overlay {
     position: fixed;

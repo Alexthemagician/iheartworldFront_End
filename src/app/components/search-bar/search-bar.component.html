@@ -4,7 +4,7 @@
   <button *ngIf="query" (click)="clearSearch()">Clear</button>
 </div>
 <div class="search-results" *ngIf="results.length > 0">
-  <table class="table table-borderless" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2em; width: 40em;">
+  <table class="table table-borderless" id="search-override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2em; width: 40em;">
     <ng-container *ngFor="let tempNewsFeed of results">
       <thead>
         <tr>
@@ -31,7 +31,7 @@
         <tr>
           <td>
             <ng-container *ngIf="tempNewsFeed.postVideoUrl !== null && tempNewsFeed.postVideoUrl !== ''">
-              <video style="max-width: 50em;" src="{{ tempNewsFeed.postVideoUrl }}" controls></video>
+              <video style="max-width: 50em; height: 15em; width: 30em; border-radius: 1em;" src="{{ tempNewsFeed.postVideoUrl }}" controls></video>
             </ng-container>
           </td>
         </tr>
