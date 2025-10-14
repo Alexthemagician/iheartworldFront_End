@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { Group } from '../../common/group';
-import { RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationComponent } from "../navigation/navigation.component";
 import { SidebarComponent } from "../sidebar/sidebar.component";
@@ -18,7 +17,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-group-feed',
   standalone: true,
-  imports: [CommonModule, RouterLink, NavigationComponent, SidebarComponent, MatButtonModule, MatMenuModule, GrouppostComponent],
+  imports: [CommonModule, NavigationComponent, SidebarComponent, MatButtonModule, MatMenuModule, GrouppostComponent],
   templateUrl: './group-feed.component.html',
   styleUrls: ['./group-feed.component.css'],
   providers: [DataTransferService]
@@ -53,18 +52,13 @@ export class GroupFeedComponent implements OnInit {
   constructor(public dataTransferService: DataTransferService, private route: ActivatedRoute, private newsFeedService: NewsfeedService, private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const groupId = +params['id']; // Convert string to number
-      if (groupId) {
-        this.loadGroupById(groupId);
-        this.loadGroupMembers(groupId);        
-      }
-    });
+
     this.auth.user$.subscribe(user => {
       if (user && user.email) {
         this.newsFeedService.getUserByEmail(user.email).subscribe(
           backendUser => {
             this.userId = backendUser.userName;
+            console.log('this.userId:', this.userId);
             if (this.userId) {
           this.isMember = this.members.includes(this.userId);          
         }                                   
@@ -75,7 +69,17 @@ export class GroupFeedComponent implements OnInit {
         );
       }
     });
-        
+
+
+    this.route.params.subscribe(params => {
+      const groupId = +params['id']; // Convert string to number
+      if (groupId) {
+        this.loadGroupById(groupId);
+        this.loadGroupMembers(groupId);       
+      }
+    });
+    
+    
   }
 
   userIdMatch(tempNewsFeed: any): boolean {
@@ -122,10 +126,14 @@ export class GroupFeedComponent implements OnInit {
   }
 
   private loadGroupMembers(groupId: number) {
-    this.dataTransferService.getMembersOfGroup(groupId).subscribe(
+    this.dataTransferService.getMemberId(groupId, this.userId).subscribe(
       data => {
-        this.members = [...new Set(data)];
-        this.checkMembershipStatus();       
+        this.members = data.map((member: any) => member.memberName);
+        console.log('Members fetched successfully:', this.members);
+        
+        console.log('Group ID:', groupId);
+        console.log('User ID:', this.userId);
+        this.checkMembershipStatus();
       },
       error => {
         console.error('Error fetching group members:', error);

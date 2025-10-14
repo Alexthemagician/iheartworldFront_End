@@ -44,8 +44,8 @@ export class DataTransferService {
     return this.httpClient.post<any>(this.groupMembersUrl, newMember);
   }
 
-  getMemberId(groupId: number, memberName: string): Observable<any> {
-    return this.httpClient.get<any>(`${this.groupMembersUrl}/by-id`, { params: { groupId, memberName } });
+  getMemberId(groupId: number, userId: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.groupMembersUrl}/by-id`, { params: { groupId, userId } });
     
   }
 
@@ -68,14 +68,10 @@ export class DataTransferService {
   }
 
   getMembersOfGroup(groupId: number): Observable<string[]> {
-    return this.httpClient.get<String[]>(`${this.groupMembersUrl}?groupId=${groupId}`).pipe(
-      map((response: any) => {
-        if (Array.isArray(response)) {        
-          return response.map((member: any) => member.memberName);
-        }
-        return [];
-      })
+    return this.httpClient.get<any>(`${this.groupMembersUrl}?groupId=${groupId}`).pipe(
+      map((response: any) => response.members || [])
     );
+    
   }
 }
 

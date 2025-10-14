@@ -1,18 +1,17 @@
 <app-navigation></app-navigation>
-<app-sidebar style="position: relative;"></app-sidebar>
+<app-sidebar></app-sidebar>
 <div *ngIf="groupId !== 0" id="group-details">
-    <h1>{{ groupName }}</h1>    
+    <h1>{{ groupName }}</h1>
     <img src="{{ groupImgUrl }}" alt="{{ groupName }}" id="group-img" />
     <p>{{ groupDescription }}</p>
     <h2 id="members">Members</h2>
     <ul>
-        <li *ngFor="let memberName of members" id="member-list">{{ memberName }}</li>
+        <li *ngFor="let member of members" id="member-list">{{ member }}</li>
     </ul>
     <p>Date Created: {{ dateCreated | date }}</p>
-    <button id="join-group-button" (click)="joinGroup()">{{ !isMember ? 'Join Group' : 'Leave Group' }}</button>    
+    <button id="join-group-button" (click)="joinGroup()">{{ !isMember ? 'Join Group' : 'Leave Group' }}</button>
 </div>
-<app-grouppost *ngIf="isModalVisible" (close)="hideModal()" >   
-</app-grouppost>
+<app-grouppost *ngIf="isModalVisible" (close)="hideModal()"></app-grouppost>
 <div id="group-feed">
 
 <table class="table table-borderless" *ngFor="let tempGroupFeed of groupFeeds" id="group_override">
@@ -20,7 +19,7 @@
         <tr>
             <th style="width: 5em; cursor: pointer;" (click)="navigateToProfile(tempGroupFeed.userId)">&#64;{{ tempGroupFeed.userId }}</th>
             <button matButton [matMenuTriggerFor]="menu" id="postMenu"><img src="assets/menu.svg" alt="Menu"></button>
-            <mat-menu #menu="matMenu">                        
+            <mat-menu #menu="matMenu">
                 <button mat-menu-item *ngIf="userIdMatch(tempGroupFeed)" (click)="showModal()" (click)="editPost(tempGroupFeed)">Edit</button>
 
                 <button mat-menu-item *ngIf="userIdMatch(tempGroupFeed)" (click)="deletePost(tempGroupFeed)">Delete</button>
@@ -30,12 +29,12 @@
     <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
         <tr>
             <td>{{ tempGroupFeed.postCategory }}</td>
-        </tr>  
+        </tr>
         <tr>
             <td>{{ tempGroupFeed.postTitle }}</td>
         </tr>
         <tr>
-            <td>{{ tempGroupFeed.postText }}</td>            
+            <td>{{ tempGroupFeed.postText }}</td>
         </tr>
         <tr>
             <td>@if (tempGroupFeed.postImgUrl !== null && tempGroupFeed.postImgUrl !== ''){<img src="{{ tempGroupFeed.postImgUrl }}" class="rounded float-start" style="height:15em; width: 30em; object-fit: cover; border-radius: 1em;">}</td>
@@ -45,10 +44,10 @@
         </tr>
         <tr>
             <td>{{ tempGroupFeed.dateCreated | date }}</td>
-        </tr>        
+        </tr>
         <tr>
             <td id="bottom"><br></td>
-        </tr>      
+        </tr>
     </tbody>
 </table>
 </div>
