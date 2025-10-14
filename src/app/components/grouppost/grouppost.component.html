@@ -31,8 +31,8 @@
 <img src="assets/upload.svg" alt="Image of photo" style="width: 15%; position: absolute; top: 2em; left: 1.5em">
 <button class="submit-button" style="position: absolute; top: 3em; left: 1.5em; background-color: transparent; border-color: transparent; color: transparent; padding: 2em 2em 2em 2em" (click)="openWidget()">Upload</button>
 <div class="thumbnails"></div>
-<button type="submit" class="submit-button" [disabled]="postForm.invalid" [class.disabled]="postForm.invalid" (click)="postNewPost()" style="position: absolute; top: 10em; left: 10em">Submit</button>
-<button type="button" class="submit-button" (click)="closeModal()" style="position: absolute; top: 10em; left: 28em">Close</button>
+<button type="submit" class="submit-button" [disabled]="postForm.invalid" [class.disabled]="postForm.invalid" (click)="postNewPost()" style="position: absolute; top: 8em; left: 10em">Submit</button>
+<button type="button" class="submit-button" (click)="closeModal()" style="position: absolute; top: 8em; left: 28em">Close</button>
 </div>
 </form>
 <div *ngIf="postForm.invalid && postForm.touched" class="form-submit-error">Please complete all required fields.</div>

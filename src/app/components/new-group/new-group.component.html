@@ -3,8 +3,8 @@
 <h1>New Group</h1>  
 <textarea id="group-name" placeholder="Enter a group name..." name="usertext" class="textarea" [(ngModel)]="groupName"></textarea>
 <textarea id="group-description" placeholder="Enter a group description..." name="usertext" class="textarea" [(ngModel)]="groupDescription"></textarea>
-<p id="group-image-url" placeholder="Upload a photo..." class="textarea"></p>
-<button class="submit-button" style="position: absolute; top: 6em; left: 0em" (click)="openWidget()">Upload</button>
+<p style="position: relative; top: 1em; left: 2em; text-align: center; align-items: center; padding-top: 2em; height: 3em;" class="textarea">Upload a photo...</p>
+<button class="submit-button" style="position: absolute; top: 12em; left: 25em" (click)="openWidget()">Upload</button>
 <div class="thumbnails"></div>
 
 <button class="group-submit-button" (click)="addNewGroup()">Submit</button>

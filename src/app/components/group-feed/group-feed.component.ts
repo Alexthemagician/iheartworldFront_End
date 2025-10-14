@@ -13,6 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../common/user';
 import { AuthService } from '@auth0/auth0-angular';
 import { GrouppostComponent } from "../grouppost/grouppost.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-group-feed',
@@ -49,7 +50,7 @@ export class GroupFeedComponent implements OnInit {
   editedPostId: number = 0;
   isMember: boolean = false;
 
-  constructor(public dataTransferService: DataTransferService, private route: ActivatedRoute, private newsFeedService: NewsfeedService, private auth: AuthService) {}
+  constructor(public dataTransferService: DataTransferService, private route: ActivatedRoute, private newsFeedService: NewsfeedService, private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -77,13 +78,13 @@ export class GroupFeedComponent implements OnInit {
         
   }
 
-  userIdMatch(tempGroupFeed: any): boolean {
-      if (this.userId === tempGroupFeed.userName) {
-        return true;
-      } else {
-        return false;
-      }
+  userIdMatch(tempNewsFeed: any): boolean {
+    if (this.userId === tempNewsFeed.userId) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
   listAllGroups() {
     this.dataTransferService.getGroups().subscribe(
@@ -327,5 +328,9 @@ export class GroupFeedComponent implements OnInit {
   hideModal() {
     this.isEditMode = false;
     this.isModalVisible = false;
+  }
+
+  navigateToProfile(userName: string) {
+    this.router.navigate(['/profile', userName]);
   }
 }

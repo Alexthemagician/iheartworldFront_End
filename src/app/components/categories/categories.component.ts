@@ -5,6 +5,7 @@ import { NavigationComponent } from "../navigation/navigation.component";
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { NewsfeedService } from '../../services/newsfeed.service';
 import { Newsfeed } from '../../common/newsfeed';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { Newsfeed } from '../../common/newsfeed';
 })
 export class CategoriesComponent {
 
-  constructor(private newsFeedService: NewsfeedService) {}
+  constructor(private newsFeedService: NewsfeedService, private router: Router) {}
 
   category1: string = 'General';
   category2: string = 'Technology';
@@ -49,6 +50,8 @@ export class CategoriesComponent {
     return this.results;
   }
 
-  
+  navigateToProfile(userName: string) {
+    this.router.navigate(['/profile', userName]);
+  }
 
 }

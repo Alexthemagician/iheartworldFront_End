@@ -1,6 +1,7 @@
 <div><app-navigation></app-navigation></div>
 <div><app-sidebar></app-sidebar></div>
 
+<div class="categories-container">
 <div class="categories-heading">
     <h2>Categories</h2>
 </div>
@@ -11,11 +12,11 @@
     <button class="category-button" (click)="searchCategory(category4)">{{ category4 }}</button>
 </div>
 <div class="categories-results" *ngIf="results.length > 0">
-    <table class="table table-borderless" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-left: 10em ">
+    <table class="table table-borderless" id="category-table">
     <ng-container *ngFor="let tempNewsFeed of results">
       <thead>
         <tr>
-          <th id="user_name">&#64;{{ tempNewsFeed.userId }}</th>
+          <th style="cursor: pointer;" (click)="navigateToProfile(tempNewsFeed.userId)" id="user_name">&#64;{{ tempNewsFeed.userId }}</th>
         </tr>
       </thead>
       <tbody style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
@@ -31,14 +32,14 @@
         <tr>
           <td>
             <ng-container *ngIf="tempNewsFeed.postImgUrl !== null && tempNewsFeed.postImgUrl !== ''">
-              <img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:25em; width: 50em; object-fit: cover;">
+              <img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:15em; width: 30em; object-fit: cover; border-radius: 1em;">
             </ng-container>
           </td>
         </tr>
         <tr>
           <td>
             <ng-container *ngIf="tempNewsFeed.postVideoUrl !== null && tempNewsFeed.postVideoUrl !== ''">
-              <video style="max-width: 50em;" src="{{ tempNewsFeed.postVideoUrl }}" controls></video>
+              <video style="max-width: 50em; height:15em; width: 30em; border-radius: 1em;" src="{{ tempNewsFeed.postVideoUrl }}" controls></video>
             </ng-container>
           </td>
         </tr>
@@ -52,5 +53,5 @@
     </ng-container>
   </table>
 </div>
-
+</div>
 

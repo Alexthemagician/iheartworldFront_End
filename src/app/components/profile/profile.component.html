@@ -23,7 +23,7 @@
         </div>
     </div>
     <div *ngIf="!isLoading && !isViewingOtherUser">
-        <h1>{{ isNewUser ? 'Complete Your Profile' : 'Update Profile' }}</h1>
+        <h1>{{userName}}  {{ isNewUser ? 'Complete Your Profile' : '' }}</h1>
   <form #profileForm="ngForm" (ngSubmit)="onSubmit(profileForm)">
     <div class="form-group">
     <label for="userName">userName:</label>

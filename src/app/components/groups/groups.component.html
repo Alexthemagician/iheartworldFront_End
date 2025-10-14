@@ -4,11 +4,12 @@
 <div>
     <app-sidebar style="position: relative;"></app-sidebar>
 </div>
+<div class="groups-container">
 <h1 class="groups-title">Groups</h1>
 <button class="create-group-button" (click)="openCreateGroupModal()">Create New Group</button>
 <app-new-group *ngIf="isModalVisible" (close)="hideModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-new-group>
-<ul *ngFor="let group of groupList" id="groups-list">
+<ul class="groups-list" *ngFor="let group of groupList" id="groups-list">
     <li><a routerLink="/groupfeed/{{ group.groupId }}">{{ group.groupName }}</a></li>
 </ul>
-
+</div>
 

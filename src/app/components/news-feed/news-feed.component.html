@@ -3,17 +3,17 @@
 </app-newpost>
 <div class="news-feed-search-bar"><app-search-bar></app-search-bar></div>
 <div class="news-feed-body">
-<table class="table table-borderless" *ngFor="let tempNewsFeed of newsFeeds" id="bootstrap_override" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+<table class="table table-borderless" *ngFor="let tempNewsFeed of newsFeeds" id="bootstrap_override">
     <thead>
         <tr>
-            <th id="user_name" (click)="navigateToProfile(tempNewsFeed.userId)" style="cursor: pointer;">
+            <th id="user_name" (click)="navigateToProfile(tempNewsFeed.userId)" style="cursor: pointer; position: relative; top: 2em;">
              &#64;{{ tempNewsFeed.userId }}
         </th>
             <button matButton [matMenuTriggerFor]="menu" id="postMenu"><img src="assets/menu.svg" alt="Menu"></button>
             <mat-menu #menu="matMenu">                        
-                <button mat-menu-item *ngIf="userIdMatch(tempNewsFeed)" (click)="showModal()" (click)="editPost(tempNewsFeed)">Edit</button>
+                <button id="post-edit-menu" mat-menu-item *ngIf="userIdMatch(tempNewsFeed)" (click)="showModal()" (click)="editPost(tempNewsFeed)">Edit</button>
                 
-                <button mat-menu-item *ngIf="userIdMatch(tempNewsFeed)" (click)="deletePost(tempNewsFeed)">Delete</button>
+                <button id="post-edit-menu" mat-menu-item *ngIf="userIdMatch(tempNewsFeed)" (click)="deletePost(tempNewsFeed)">Delete</button>
             </mat-menu>
         </tr>
     </thead>
@@ -28,10 +28,10 @@
             <td>{{ tempNewsFeed.postText }}</td>
         </tr>
         <tr>
-            <td>@if (tempNewsFeed.postImgUrl !== null && tempNewsFeed.postImgUrl !== ''){<img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:25em; width: 50em; object-fit: cover;">}</td>
+            <td>@if (tempNewsFeed.postImgUrl !== null && tempNewsFeed.postImgUrl !== ''){<img src="{{ tempNewsFeed.postImgUrl }}" class="rounded float-start" style="height:10em; width: 25em; object-fit: cover; border-radius: 1em;">}</td>
         </tr>
         <tr>
-            <td>@if (tempNewsFeed.postVideoUrl !== null && tempNewsFeed.postVideoUrl !== ''){<video style="max-width: 50em;" src="{{ tempNewsFeed.postVideoUrl }}" controls></video>}</td>
+            <td>@if (tempNewsFeed.postVideoUrl !== null && tempNewsFeed.postVideoUrl !== ''){<video style="max-width: 50em; height: 10em; width: 25em; border-radius: 1em;" src="{{ tempNewsFeed.postVideoUrl }}" controls></video>}</td>
         </tr>
         <tr>
             <td>{{ tempNewsFeed.dateCreated | date }}</td>
