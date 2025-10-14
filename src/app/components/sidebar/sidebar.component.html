@@ -9,5 +9,5 @@
     <app-grouppost *ngIf="isGroupModalVisible" (close)="hideGroupModal()" style="z-index: 2; position: absolute; left: 30%; top: 20%"></app-grouppost>
 
 </div>
-<div *ngIf="!isMember && pathMatch.test(pathname)" style="max-width: 20%; display: flex; justify-content: center; flex-direction: column; text-align: center; padding-top: 1em; color: red; bottom: 120em; position: relative;">
-    <p>You must be a member of the group to create a post.</p></div>
+<div *ngIf="!isUserIdMember() && isGroupPost" style="max-width: 20%; display: flex; justify-content: center; flex-direction: column; text-align: center; padding-top: 1em; padding-left: 1em; color: red; top: 20em; position: fixed; z-index: 5;" class="readonly-notice">
+    <p>You must be a member of<br> the group to create a post.</p></div>

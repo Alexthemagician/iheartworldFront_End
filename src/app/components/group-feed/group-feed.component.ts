@@ -72,7 +72,7 @@ export class GroupFeedComponent implements OnInit {
 
 
     this.route.params.subscribe(params => {
-      const groupId = +params['id']; // Convert string to number
+      const groupId = +params['id'];
       if (groupId) {
         this.loadGroupById(groupId);
         this.loadGroupMembers(groupId);       
@@ -93,31 +93,29 @@ export class GroupFeedComponent implements OnInit {
   listAllGroups() {
     this.dataTransferService.getGroups().subscribe(
       data => {
-        this.groupList = data;        
+        this.groupList = data;
         console.log('Groups fetched successfully:', this.groupList);
         console.log(this.groupId);
       },
-      error => {      
+      error => {
         console.error('Error fetching groups:', error);
       }
     );
     
   }
 
-  loadGroupById(groupId: number) {    
+  loadGroupById(groupId: number) {
     this.dataTransferService.getGroupById(groupId).subscribe(
       data => {
         this.groupId = data.groupId;
         this.groupName = data.groupName;
         this.groupDescription = data.groupDescription;
-        this.groupImgUrl = data.groupImgUrl;             
+        this.groupImgUrl = data.groupImgUrl;      
         this.dateCreated = data.dateCreated;
         this.sendNewPostData();
-        
-        // Load group feeds after groupId is set
         this.listGroupFeeds();
         
-        console.log('Group details fetched successfully:', data);        
+        console.log('Group details fetched successfully:', data);
       },
       error => {
         console.error('Error fetching group details:', error);
@@ -129,10 +127,8 @@ export class GroupFeedComponent implements OnInit {
     this.dataTransferService.getMemberId(groupId, this.userId).subscribe(
       data => {
         this.members = data.map((member: any) => member.memberName);
-        console.log('Members fetched successfully:', this.members);
+        console.log('Members fetched successfully:', this.members);        
         
-        console.log('Group ID:', groupId);
-        console.log('User ID:', this.userId);
         this.checkMembershipStatus();
       },
       error => {
@@ -147,8 +143,7 @@ export class GroupFeedComponent implements OnInit {
 
   private checkMembershipStatus() {
   if (this.userId && this.members.length >= 0) {
-    this.isMember = this.members.includes(this.userId);
-    console.log('Membership status check - User:', this.userId, 'Is member:', this.isMember, 'Members:', this.members);
+    this.isMember = this.members.includes(this.userId);    
   }
 }
 
@@ -234,7 +229,7 @@ export class GroupFeedComponent implements OnInit {
       console.log('Filtered group feeds:', this.groupFeeds);
       console.log('Number of posts for group', this.groupId + ':', this.groupFeeds.length);
       
-      // Debug: Show all groupIds in the response
+      
       data.forEach((feed: any, index: number) => {
         console.log(`Post ${index + 1}: groupId = ${feed.groupId || (feed as any).groupId}`);
       });
@@ -253,7 +248,7 @@ export class GroupFeedComponent implements OnInit {
     
     this.isEditMode = true;
     const match = tempGroupFeed._links?.self?.href.match(/\/(\d+)$/);
-    const postId = match ? parseInt(match[1], 10) : null;    
+    const postId = match ? parseInt(match[1], 10) : null;
     this.postText = tempGroupFeed.postText;
     this.postTitle = tempGroupFeed.postTitle;
     this.postCategory = tempGroupFeed.postCategory;
@@ -273,7 +268,7 @@ export class GroupFeedComponent implements OnInit {
     this.editedPostId = postId;
     }
     console.log(postId);
-    console.log(editedText);    
+    console.log(editedText);
     
     this.sendData();
           
@@ -294,7 +289,7 @@ export class GroupFeedComponent implements OnInit {
         editedDateCreated: this.editedDateCreated,
         groupId: this.groupId
       };
-      console.log('Sending data with groupId:', this.groupId); 
+      console.log('Sending data with groupId:', this.groupId);
       this.dataTransferService.changeData(data);
   }
 
@@ -329,8 +324,8 @@ export class GroupFeedComponent implements OnInit {
 
   showModal() {
     this.isModalVisible = true;
-    this.isEditMode = false; 
-    this.sendNewPostData(); 
+    this.isEditMode = false;
+    this.sendNewPostData();
   }
 
   hideModal() {

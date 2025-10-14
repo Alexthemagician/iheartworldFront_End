@@ -68,7 +68,7 @@ export class ProfileComponent extends NewpostComponent {
 },
     (error: any, result: any) => {
       if (!error && result && result.event === "success") {
-        this.profileImgUrl = result.info.secure_url;// This could be an image or a video URL, named just for simplicity
+        this.profileImgUrl = result.info.secure_url;// This could be an image or a video URL, named just for simplicity. I'm using the same API for images and videos.
         this.uploadResult = true;
         console.log('Done! Here is the image info: ', result.info);
         const profileImage = document.querySelector('.profile-picture-preview') as HTMLImageElement;
@@ -200,8 +200,7 @@ export class ProfileComponent extends NewpostComponent {
   }
 
     updateProfile() {
-       if (this.isViewingOtherUser) {
-      alert('You cannot edit another user\'s profile.');
+       if (this.isViewingOtherUser) {      
       return;
     }
 

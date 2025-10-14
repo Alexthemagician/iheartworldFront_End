@@ -18,9 +18,7 @@
                 <p>{{ about || 'No information provided.' }}</p>
             </div>
         </div>
-        <div class="readonly-notice">
-            <p><em>You are viewing {{ userName }}'s profile.</em></p>
-        </div>
+        
     </div>
     <div *ngIf="!isLoading && !isViewingOtherUser">
         <h1>{{userName}}  {{ isNewUser ? 'Complete Your Profile' : '' }}</h1>
@@ -43,7 +41,7 @@
     </div>
 
     <div class="form-group">
-    <label for="password">Re-Enter Password:</label>
+    <label for="password">Password:</label>
     <input type="password" id="password" name="password" [required]="isNewUser" [readonly]="!isNewUser" [class.readonly]="!isNewUser" [(ngModel)]="userPassword" #passwordInput="ngModel" minlength="8"/>
 
     <div *ngIf="passwordInput.invalid && passwordInput.touched && isNewUser" class="error-message">
@@ -81,7 +79,7 @@
         <strong>New User:</strong> Please complete all fields to create your profile.
       </p>
       <p *ngIf="!isNewUser" class="info-message">
-        <strong>Existing User:</strong> You can only update your About section and profile picture.
+        <strong>Note:</strong> You can only update your About section and profile picture.
       </p>
     </div>
     </div>

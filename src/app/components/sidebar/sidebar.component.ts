@@ -7,6 +7,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { SearchBarComponent } from "../search-bar/search-bar.component";
 import { NewsfeedService } from '../../services/newsfeed.service';
 import { AuthService } from '@auth0/auth0-angular';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -38,8 +39,9 @@ export class SidebarComponent {
   members: string[] = [];
   isMember: boolean = false;
   isGroupPost: boolean = false;
+  memberName: string = '';
 
-  constructor(private dataTransferService: DataTransferService, private auth: AuthService, private newsFeedService: NewsfeedService) {}
+  constructor(private dataTransferService: DataTransferService, private auth: AuthService, private newsFeedService: NewsfeedService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.dataTransferService.currentData.subscribe(data => {
@@ -60,11 +62,6 @@ export class SidebarComponent {
       }
     });
 
-    this.dataTransferService.getMembersOfGroup(this.dataTransferService.getCurrentGroupId()).subscribe(members => {
-      this.members = members;
-      console.log('Group Members:', this.members);
-    });
-
     this.auth.user$.subscribe(user => {
       if (user && user.email) {
         this.newsFeedService.getUserByEmail(user.email).subscribe(
@@ -83,6 +80,17 @@ export class SidebarComponent {
       
       }
     });
+    
+    this.route.params.subscribe(params => {
+      const groupId = +params['id'];
+    console.log('Current Group ID:', groupId);
+    this.dataTransferService.getMemberId(groupId, this.userId).subscribe(members => {
+      this.members = members.map((member: any) => member.memberName);
+      console.log('Group Members:', this.members);
+    });
+  });
+
+    
     
   }
     
@@ -108,6 +116,10 @@ export class SidebarComponent {
 
   hideNewsFeed() {
     this.isNewsFeedVisible = false;
+  }
+
+  isUserIdMember(): boolean {
+    return this.isMember;
   }
   
 }

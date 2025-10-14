@@ -20,7 +20,7 @@ export class HomeComponent {
 
   ngOnInit() {
     this.auth.isAuthenticated$.subscribe((authenticated) => {
-      this.isLoggedIn = authenticated;
+      this.isLoggedIn = authenticated; //If the user isn't logged in, we'll show this as a landing page. If logged in, we'll show the main page.
     });
   }
 
