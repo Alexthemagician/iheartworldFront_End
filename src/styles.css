@@ -570,12 +570,13 @@ body {
     justify-content: flex-end;  
     border-bottom: solid 2px var(--body-bg-color-light);
     background-color: var(--body-bg-color-light);
-    position: absolute;
+    position: fixed;
     min-width: 100%;    
     left: 0;
     top: 0;
     height: 5em;
     z-index: 100;
+    overflow-y: hidden;
 }
 
 #create-post {
